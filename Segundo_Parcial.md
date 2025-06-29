@@ -53,6 +53,12 @@ Sea $A\in\mathbb{C}^{m\times n}$...
 Calcular SVD para $A^*$ sale de...
 $$A^* = (U \Sigma V^*)^* = V \Sigma^t U^*$$
 
+#### Propiedades para $A=U\Sigma V^*$
+- $Im(A) = < u_1, ..., u_r >$
+- $Im(A^t) = < v_1, ..., v_r >$
+- $Nu(A) = < v_{r+1}, ..., v_{n} >$
+- $Nu(A^t) = < u_{r+1}, ..., u_{m} > = Nu(A^tA)$
+
 ## Procesos de Markov.
 
 #### Proceso de Markov
@@ -100,8 +106,6 @@ Props:
 - Las ecuaciones normales no están bien condicionadas por eso las soluciones usan QR o SVD ($\text{cond}(A^tA) = \text{cond}_2(A)²$ y $\text{cond}_2(A) = \frac{\sigma_1}{\sigma_n}$).
 - $A \text{ tiene columnas LI} \iff \text{ Cuadrados mínimos tiene única solución}$.
 
-## Interpolación
-
 ## Métodos Iterativos. Convergencia.
 
 $$A = D + L + U$$
@@ -124,6 +128,11 @@ $x^{(n+1)} = -(D+L)^{-1}Ux^{(n)} + (D+L)^{-1}b$
 #### Propiedades
 - $T = -M^{⁻1}N \land \lambda \text{ autovalor de T} \iff det(\lambda M + N) = 0$ 
 - El método converge en $n$ pasos si $T^n = 0$.
+- $A$ matriz cuadrada y tridiagonal ($|a_{ij}=0| si |j-i|>1$) con $a_{ii}\neq 0$ para todo $i=1...n$. Entonces $\rho(B_{GS}) = \rho(B_j)^2$
+- Para toda norma subordinada $||.||$ vale que:
+    $$\rho(B) = lim_{n \rightarrow \inf} || B^n ||^{1/n}$$
+- $x^* = Bx^* + c$
+- $err_k = x_k - x^* = B_{gs} * err_{k-1} = B_{gs} * (x_{k-1} - x^*)$
 
 #### Radio espectral
 El radio espectral $\rho(T)$ de la matriz de iteración $T$ determina si un método iterativo converge y qué tan rápido lo hace. 
@@ -134,17 +143,19 @@ Cuanto menor sea $\rho(B)$, más rápida será la convergencia .
 
 ### Propiedades
 
-- $A$ es hermitana $\iff$ $A=A^*$. Las matrices hermitanas son un subconjunto de las normales.
+- $A$ es hermitana $\iff$ $A=A^*$. 
+
+- Las matrices hermitianas tienen autovalores reales y son diagonalizables ortogonalmente con $A=UDU*$
+
+- Las matrices hermitanas son un subconjunto de las normales.
+
+- $A$ hermitiana -> todo sus autovectores son ortogonales entre si.
 
 - $A$ simétrica real $\rightarrow$ $A$ hermitana. 
 
 - $A$ es normal $\iff$ $A^*A = AA^*$
 
 - <u>Teorema Espectral</u>: Si $A$ es normal, entonces se puede diagonalizar en una b.o.n como $A=QDQ^*$. 
-
-- $A$ diagonalizable y -1 no es avalor entonces existe $v^{(\inf)}$
-
-- Las matrices que no tienen bases de autovectores se llaman defectuosas
 
 - $A^tA$ es simétrica
 
@@ -154,4 +165,8 @@ Cuanto menor sea $\rho(B)$, más rápida será la convergencia .
 
 - $||UA|| = ||A||, \text{ U matriz unitaria}$
 
-#### Pseudoinversa
+- Si $M$ es real y simétrica y $v,w$ son autovectores de autovalores diferentes, entonces $v, w$ son ortogonales.
+
+- Pseudoinversa: $$A^{+} = (A^tA)^{-1}A^t$$
+
+

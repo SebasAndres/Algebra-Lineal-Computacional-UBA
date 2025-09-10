@@ -1,20 +1,80 @@
 # Primer Parcial
 
-## Propiedades matriciales
+## Preeliminar
 
+### Sistemas
+- [1] **Compatible determinado**: Tiene solución única. Todos los elementos de la diagonal de la matriz triangulada son distintos a 0.
+- [2] **Compatible indeterminado**: Tiene infinitas soluciones. Si al menos un elemento de la diagonal en la matriz triangulada es 0 y el termino independiente de esa fila es 0 (en los homogeneos valdría siempre).
+- [3] **Indeterminado**: No tiene solución. Si al menos un elemento de la diagonal en la matriz triangulada es 0 y el termino independiente de esa fila NO es 0.
+
+### Linealmente independiente
+Veo que un cjt de vectores $\{ v_0, ..., v_i \}$ es LI viendo que el sistema homogeneo correspondiente a agregarlos como vectores columna es compatible determinado. 
+
+### Propiedades matriciales
 - $A \text{ es inversible} \iff [Ax = 0 \iff x=0] \iff det(A) \neq 0$
-
 - $S^⊥ =^{def}$?
-
 - Cualquier matriz $A\in\mathbb{K}^{n\times n}$ puede escribirse como $A=\sum_i \sum_j a_{ij} E_{ij}$, siendo $E_{ij}$ la matríz definida por 
 $$E_{ij} = \begin{cases} 
     1 & \text{si i=j} \\
     0 & \text{cc.}
 \end{cases}$$
 
+### Subespacios
+Un subespacio debe cumplir que:
+- [1] $0 \in S$
+- [2] $v\in S, w\in S \rightarrow v+w \in S$
+- [3] $\forall k\in \mathbb{K}, s \in S, kS \in S$
+
+Más propiedades:
+- $S$ y $T$ dos subespacios están en suma directa si $S\cap T = \{ 0 \}$.
+- $S$ y $T$ con generadores $\{ s_0, ..., s_i \}$ y $\{ t_0, ..., t_j \}$ entonces $S+T= \langle s_0, ..., s_i, t_0, ..., t_j \rangle$
+- $S = \langle s_0, ..., s_i \rangle, S \subset T \iff \forall s_j, s_j \in T$ 
+- $S \cup T = \{ w : w\in S \lor w\in T\}$. En general no es un subespacio.
+
+### Generadores y base
+- Para obtener una base a partir de generadores puedo poner los vectores en filas, triangular la matríz y ver que, las filas que se vuelven 0 podemos sacarlas, y si se vuelven CL sacar 1.
+- Para extender generados para formar una base puedo alinear los vectores como filas y completar las filas para que la matriz triangulada quede LI.
+
+### Cambio de base
+- **Coordenadas**: Sea $V = \langle v_0, ..., v_m \rangle$. Se llama coordenadas de $v = \sum_i^m \alpha_i v_i \in V$ en base $B=\{v_0, ..., v_m\}$ al vector $[w]_B = (\alpha_0, ..., \alpha_m)$. 
+- **Matriz cambio de base**: Si quiero escribir a $w$ en otra base $B'=\{  z_1, ..., z_n \}$ y tengo las coordenadas en la base $B$. Vale que:
+  - En base canónica: $w=[v_1 | ... | v_n]\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix} = C_{BE}\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix}$
+  - $w = [z_1 | ... | z_n]\begin{pmatrix} \beta_1 \\ ... \\ \beta_n \end{pmatrix} = C_{B'E}\begin{pmatrix} \beta_1 \\ ... \\ \beta_n \end{pmatrix}$
+
+Luego, juntando:
+$$w=C_{BE}[w]_B = C_{B'E}[w]_{B'}$$
+Entonces
+$[w]_{B'} = C_{B'E}^{-1}C_{BE}[w]_B$
+
+Donde $C_{BB'}=C_{B'E}^{-1}C_{BE}$ es la "matriz de cambio de base".
+
+> Observación:
+> $C_{AB}$ es la nomenclatura para la matriz de cambio de base que recibe en $A$ y devuelve en $B$.
+
+### Transposición (propiedades)
+- $(A^t)^t = A$
+- $(\alpha A)^t = \alpha A^t$
+- $(AB)^t = B^tA^t$
+
+### Traza (propiedades)
+- $tr(A+B) = tr(A) + tr(B)$
+- $tr(\alpha A)=\alpha A$
+- $tr(A^t) = tr(A)$
+- $tr(AB) = tr(BA)$
+
+### Determinante (propiedades)
+- Si $A$ es triangular superior, $det(A) = \prod_{i=0}^n A_{ii}$
+- $det(A) = det(A^t)$
+- $det(kA) = k^n det(A)$
+- $det(AB) = det(A) det(B)$
+- Si $A$ es invertible, $det(A^{-1}) = \frac{1}{det(A)}$
+- $A$ inversible $\iff det(A) \neq 0$
+
+### Matríz adjunta (transpuesta y conjugada) 
+- $A^* = \hat{A^t}$
+
 
 ## Proyecciones
-
 Dado un subespacio $S \subset \mathbb{R}^n$ tal que $S = \text{col}(A)$ se define una proyección ortogonal sobre $S$ a $P_S: \mathbb{R}^n \rightarrow \mathbb{R}^n$, tal que:
 
 - $P_S(s) = s \text{ } \forall s\in S $
@@ -29,8 +89,7 @@ Donde a nivel operativo se busca una $\hat A = Q$, formada con los vectores colu
 $$P_S = QQ^t$$
 
 O también, si tengo una b.o.n de $S$ de la forma $\{ v_1, ..., v_r \}$, puedo obtener el proyector ortogonal a S como:
-
-$$P_S(x) = P * x = (\sum_{i=1}^r v_i v_i^t) * x$$ 
+$ P_S(x) = P * x = (\sum_{i=1}^r v_i v_i^t) * x $
 
 ### Ortonormalizar una matriz
 
@@ -55,7 +114,7 @@ Donde:
 #### Propiedades de matrices ortonormales
 - $Q^tQ = I$
 - $Im(A) = Im(Q) \text{ pero la transformación lineal es distinta, es decir, generalmente } Ax \neq Qx$
-- $Q$ es más estable y tiene mejor numero de condicion.
+- $Q$ es más estable y tiene mejor numerVo de condicion.
 
 ## Normas vectoriales
 Una norma de un $\mathbb{K}$-espacio vectorial es una función $||.|| : V \rightarrow \mathbb{R}_{\geq 0}$ que cumple las siguientes propiedades:
@@ -67,6 +126,9 @@ Una norma de un $\mathbb{K}$-espacio vectorial es una función $||.|| : V \right
 - Norma-1: $||v|| = |v_1| + ... + |v_n|$
 - Norma-infinito: $||v||_{\infty} = \text{máx} \{ |v_1|, ..., |v_n| \}$
 - Norma-p: $||v||_p = (|v_1|^p + ... + |v_n|^p)^{1/p}$
+
+#### Desigualdad Cauchy-Schwartz:
+$$|x^*y| \leq ||x||_w ||y||_2, \text{ para } x, y \in \mathbb{K}^n$$
 
 ##### Equivalencia entre normas:
 Sean $||.||$ y $||.||_*$ dos normas en mismo $\mathbb{K}$-espacio vectorial $V$. Son equivalentes si $\exists c,C > 0$ tales que para todo $x\in V$:

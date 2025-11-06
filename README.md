@@ -1,5 +1,5 @@
 # Algebra Lineal Computacional - FCEyN UBA | 2025
-Material de cursada y resumenes
+Material de cursada y resumenes.
 
 ## Programa
 ### Capítulo I

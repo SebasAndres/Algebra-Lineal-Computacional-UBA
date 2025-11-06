@@ -39,8 +39,8 @@ $$ A \text{ es diagonalizable si es semejante a una matriz diagonal}$$
 
 $$ A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$$
 
-<img src='def_normas.png'>
-<img src='prop_normas.png'>
-<img src='normas_especiales.png'>
-<img src='equivalencia_normas.png'>
-<img src='prop_condicion.png'>
+<img src='../img/def_normas.png'>
+<img src='../img/prop_normas.png'>
+<img src='../img/normas_especiales.png'>
+<img src='../img/equivalencia_normas.png'>
+<img src='../img/prop_condicion.png'>

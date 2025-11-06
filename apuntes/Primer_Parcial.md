@@ -7,6 +7,11 @@
 - [2] **Compatible indeterminado**: Tiene infinitas soluciones. Si al menos un elemento de la diagonal en la matriz triangulada es 0 y el termino independiente de esa fila es 0 (en los homogeneos valdría siempre).
 - [3] **Indeterminado**: No tiene solución. Si al menos un elemento de la diagonal en la matriz triangulada es 0 y el termino independiente de esa fila NO es 0.
 
+### Propiedades
+$$dim(S) = n - rk(A), \text{ con } S = \{x: Ax= 0\}$$
+> Teo: $\mathbb{V}$ espacio de dim finita, $f: \mathbb{V} \rightarrow \text{W}$ una tl.
+> Sup $ker(f)$ tiene a $B$ como base y $B' = B \cup C$ una completación de una base de $\mathbb{V}$ con $C\cap B=\empty$, entonces $f(C)$ es una base de $\mathbb{W}$
+
 ### Linealmente independiente
 Veo que un cjt de vectores $\{ v_0, ..., v_i \}$ es LI viendo que el sistema homogeneo correspondiente a agregarlos como vectores columna es compatible determinado. 
 
@@ -18,6 +23,7 @@ $$E_{ij} = \begin{cases}
     1 & \text{si i=j} \\
     0 & \text{cc.}
 \end{cases}$$
+- $Q$ matriz cuadrada $\rightarrow Im(Q) = Nu(I-Q)$
 
 ### Subespacios
 Un subespacio debe cumplir que:
@@ -36,9 +42,9 @@ Más propiedades:
 - Para extender generados para formar una base puedo alinear los vectores como filas y completar las filas para que la matriz triangulada quede LI.
 
 ### Cambio de base
-- **Coordenadas**: Sea $V = \langle v_0, ..., v_m \rangle$. Se llama coordenadas de $v = \sum_i^m \alpha_i v_i \in V$ en base $B=\{v_0, ..., v_m\}$ al vector $[w]_B = (\alpha_0, ..., \alpha_m)$. 
+- **Coordenadas**: Sea $V = \langle v_0, ..., v_m \rangle$. Se llama coordenadas de $v = \sum_i^m \alpha_i v_i \in V$ en base $B=\{v_1, ..., v_m\}$ al vector $[w]_B = (\alpha_0, ..., \alpha_m)$. 
 - **Matriz cambio de base**: Si quiero escribir a $w$ en otra base $B'=\{  z_1, ..., z_n \}$ y tengo las coordenadas en la base $B$. Vale que:
-  - En base canónica: $w=[v_1 | ... | v_n]\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix} = C_{BE}\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix}$
+  - En base canónica: $w=[v_1 | ... | v_m]\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix} = C_{BE}\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix}$
   - $w = [z_1 | ... | z_n]\begin{pmatrix} \beta_1 \\ ... \\ \beta_n \end{pmatrix} = C_{B'E}\begin{pmatrix} \beta_1 \\ ... \\ \beta_n \end{pmatrix}$
 
 Luego, juntando:
@@ -73,6 +79,16 @@ Donde $C_{BB'}=C_{B'E}^{-1}C_{BE}$ es la "matriz de cambio de base".
 ### Matríz adjunta (transpuesta y conjugada) 
 - $A^* = \hat{A^t}$
 
+## Transformaciones Lineales
+Sean $\mathbb{V}, \mathbb{W}$ dos $\mathbb{K}$ espacios vectoriales. Una funcion $f: \mathbb{V} \rightarrow \mathbb{W}$ se dice que es una transformacion si para todo $u,v \in \mathbb{V}$ y $\lambda \in \mathbb{K}$, vale que:
+$$f(\lambda u + v) = \lambda f(u) + f(v)$$
+
+> Teorema: Si $B$ es una base de $\mathbb{V}$ y $f: \mathbb{V} \rightarrow \mathbb{W}$, entonces $f(B)$ contiene una base de $im(f)$.
+
+> Monomorfismo:
+
+> Isomorfismo:
+
 
 ## Proyecciones
 Dado un subespacio $S \subset \mathbb{R}^n$ tal que $S = \text{col}(A)$ se define una proyección ortogonal sobre $S$ a $P_S: \mathbb{R}^n \rightarrow \mathbb{R}^n$, tal que:
@@ -90,6 +106,9 @@ $$P_S = QQ^t$$
 
 O también, si tengo una b.o.n de $S$ de la forma $\{ v_1, ..., v_r \}$, puedo obtener el proyector ortogonal a S como:
 $ P_S(x) = P * x = (\sum_{i=1}^r v_i v_i^t) * x $
+
+- $Q \text{ matriz de proyeccion } \rightarrow Q^2 = Q$
+- $Q \text{ matriz de proyeccion ortogonal } \rightarrow Q^2 = Q \land Q^t = Q$
 
 ### Ortonormalizar una matriz
 
@@ -128,7 +147,7 @@ Una norma de un $\mathbb{K}$-espacio vectorial es una función $||.|| : V \right
 - Norma-p: $||v||_p = (|v_1|^p + ... + |v_n|^p)^{1/p}$
 
 #### Desigualdad Cauchy-Schwartz:
-$$|x^*y| \leq ||x||_w ||y||_2, \text{ para } x, y \in \mathbb{K}^n$$
+$$|x^*y| \leq ||x|| * ||y||, \text{ para } x, y \in \mathbb{K}^n$$
 
 ##### Equivalencia entre normas:
 Sean $||.||$ y $||.||_*$ dos normas en mismo $\mathbb{K}$-espacio vectorial $V$. Son equivalentes si $\exists c,C > 0$ tales que para todo $x\in V$:
@@ -153,6 +172,7 @@ $$
 - $||Ax|| \leq ||A|| ||x||$
 - $||AB|| \leq ||A|| ||B||$
 - $||A|| = \sup_{v \neq 0} \{ \frac{||Mv||}{||v||} \} < 1$
+- $$e \in Ker(A^T) \iff e \perp c(A)$$
 - $Q$ unitaria, $||Qx|| = ||x||$
 - $cond_*(A) = ||A||_* ||A^{-1}||_* $
 - $cond_*(A) \geq \sup_{H \text{ singular}} \{ \frac{||A|| } {||A - H ||}\}$
@@ -184,7 +204,7 @@ Esta descomposición existe para cualquier matríz cuadrada.
     0 & \text{cc.}
     \end{cases}$$
 3. Defino $D_1$ de tal forma que $D_1 * D_1 = D$, o sea:
-    $$ (D_1){ii} = \sqrt{D_{ii}} $$ 
+    $(D_1)_{ii} = \sqrt{D_{ii}}$
 4. Defino $\hat{L} = L*D_1$
 5. Luego $\hat{L}^t$ es simplemente tomar la transpuesta de la calculada en el paso anterior y tengo $A=\hat{L}\hat{L}^t$
 
@@ -192,7 +212,7 @@ Esta descomposición existe para cualquier matríz cuadrada.
 
 Podemos calcularla usando Gram-Schmidt o Householder.
 
-<u>Algoritmo:</u>
+<u>Algoritmo con Householder:</u>
 1. Tenemos $A$ y tomamos $v_i$ como la iésima columna de A `v_i = (A[i:][])` y $w_i = \begin{bmatrix}
         \| v_i \| \\
         0 \\
@@ -212,3 +232,51 @@ Podemos calcularla usando Gram-Schmidt o Householder.
 5. Repito el paso hasta tener $A'$ diagonal superior (la llamo $R$),
 6. Defino $Q = H_r * ... * H_2 * H_1$
 7. Luego $A = H_r * ... * H_2 * H_1 * R = QR$
+
+<u>Algoritmo con Gram-Schmidt:</u>
+1. Calculo una b.o.n. a partir de $A$ y obtengo $Q$ unitaria de la forma:
+    $$Q=[ q_1 | ... | q_n]$$
+    Con $q_i = \frac{v_i}{||v_i||}, \text{ siendo } v_i \text{ vectores ortogonales}$.
+
+2. Defino la matríz triangular superior $R$ como $R=Q^t A$
+    $$R = \begin{pmatrix}
+    \mathbf{q}_1^T \mathbf{a}_1 & \mathbf{q}_1^T \mathbf{a}_2 & \mathbf{q}_1^T \mathbf{a}_3 & \cdots \\
+    0 & \mathbf{q}_2^T \mathbf{a}_2 & \mathbf{q}_2^T \mathbf{a}_3 & \cdots \\
+    0 & 0 & \mathbf{q}_3^T \mathbf{a}_3 & \cdots \\
+    \vdots & \vdots & \vdots & \ddots
+    \end{pmatrix}$$
+    Donde los elementos en la diagonal son $r_{kk} = \|\mathbf{v}_k\|$.
+
+## Teoremas y propiedades
+- $$ A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$$
+
+### Condición
+- $$ cond_k(A) = || A ||_k * || A^{-1} ||_k $$
+- $$ cond_k(A) \geq \sup_{H \text{ singular}} \{ \frac{|| A ||_k } {|| A - H ||_k }\}$$
+- $$ cond_k(A) \leq \inf_{H \text{ singular}} \{ \frac{|| A - H||_k } {|| A ||_k }\}$$
+- $$\frac{||\tilde{x}-x||}{||x||} \leq cond(A) \frac{||\tilde{b}-b||}{||b||}$$
+
+### Definida positiva
+- $$A \text{ es definida positiva } \iff A=LU \text{ con } U_{ii} > 0 \text{ para } \forall i \in \{1 .. n\}$$
+
+### Inversible
+- $$A \text{ inversible} \iff det(A) = 0 \iff \exists v \neq 0 | Av = 0$$
+- $$ A \text { no es inversible } \iff \lambda=0 \text{ es autovalor}$$
+
+### Diagonalizable
+- $$A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base} $$
+- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovectores LI (vectores columna de A)}$$
+- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i)$$
+- $$ A\in K^{N\times N} \text { es diagonalizable } \iff A = PDP^{-1}, D \text{ diagonal }$$
+- $$ A\in K^{N\times N} \text { es diagonalizable } \iff A^m = PD^mP^{-1}$$
+- $$ A \text{ es diagonalizable si es semejante a una matriz diagonal}$$
+
+### Multiplicidades
+- $$ mg_a(\lambda) = dim(E_\lambda)$$
+- $$ ma_a(\lambda) = \text{ "multiplicidad de lambda como raíz en } x(\lambda) \text{" }$$
+- $$1 \leq mg_a(\lambda) \leq ma_a(\lambda)$$
+
+### Matrices semejantes
+- $A, B \in K^{N\times N} \text{ son semejantes } \iff \exists c \in K^{N \times N} \text{ tal que } A = CBC^{-1}$ 
+- $$ \text{A y B son semejantes si } A= CBC^{-1}$$
+- $$P(x) = [ P ] x = \sum (x * e_i) * e_i, \text{ con } e_i \text{ los vectores columnas de la matriz ortogonal de P}$$

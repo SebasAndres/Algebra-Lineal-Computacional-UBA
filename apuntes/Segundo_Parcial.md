@@ -106,6 +106,60 @@ Props:
 - Las ecuaciones normales no están bien condicionadas por eso las soluciones usan QR o SVD ($\text{cond}(A^tA) = \text{cond}_2(A)²$ y $\text{cond}_2(A) = \frac{\sigma_1}{\sigma_n}$).
 - $A \text{ tiene columnas LI} \iff \text{ Cuadrados mínimos tiene única solución}$.
 
+Desarrollo de la fórmula: 
+- Aparece minimizando una función de error $L(y, \hat{y}) = (y-\hat{y})^2$ o también $E = \sum_{i=1}^n (y_i-\hat{y_i})^2$.
+- Luego, buscamos...
+$$\argmin_{a,b}{E(a,b)}=\argmin_{a,b}{\sum_{i=1}^n (y_i-\hat{y_i})^2}=\argmin_{a,b}{\sum_{i=1}^n (y_i-(a*x_i+b))^2}$$
+- O también, matricialmente..
+$$\argmin_{a,b}{
+    \begin{Vmatrix}
+    \begin{pmatrix}
+    y_0 \\
+    ... \\
+    y_n
+    \end{pmatrix}
+    - 
+    \begin{pmatrix}
+    a*x_0+b \\
+    ... \\
+    a*x_n+b
+    \end{pmatrix}
+    \end{Vmatrix}^2_2
+} = 
+\argmin_{a,b}{
+    \begin{Vmatrix}
+    \begin{pmatrix}
+    y_0 \\
+    ... \\
+    y_n
+    \end{pmatrix}
+    - 
+    \begin{pmatrix}
+    x_0 & 1 \\
+    ... \\
+    x_n & 1
+    \end{pmatrix}
+
+    \begin{pmatrix}
+    a \\
+    b 
+    \end{pmatrix}
+    \end{Vmatrix}_2^2
+} =
+\argmin_{a,b}{
+    \begin{Vmatrix}
+    Y - A \begin{pmatrix} a \\ b \end{pmatrix} 
+    \end{Vmatrix}_2^2
+}
+$$
+
+Si llamamos $\hat{X}$ a los parámetros $\begin{pmatrix} a \\ b \end{pmatrix}$ entonces la solución apróximada queda..
+$$\argmin_{\hat{X}}{
+    \begin{Vmatrix}
+    A\hat{X}-b
+    \end{Vmatrix}_2^2}$$
+
+
 ## Métodos Iterativos. Convergencia.
 
 $$A = D + L + U$$

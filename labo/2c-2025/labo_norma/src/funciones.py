@@ -1,12 +1,12 @@
 from typing import (
-    List, Set, Union
+    List, Set, Union, Tuple
 )
 import numpy as np
 
 Vector = Union[List, Set, np.ndarray]
 Matriz = Union[List[Vector], Set[Vector], np.ndarray]
 
-def norma(x: Vector, p: int) -> int:
+def norma(x: Vector, p: int) -> float:
     """
     Calcula la norma p de un vector x dado.
     """
@@ -33,14 +33,14 @@ def normaliza(x:Vector, p: int) -> Vector:
     return y    
 
 
-def generarVectorRandom(size:int):
+def generarVectorRandom(size:int) -> Vector:
     """
     Genera un vector aleatorio de tamaño size
     """
     return np.random.rand(size)
     
 
-def generarVectorRandomNormalizado(size:int, p:int):
+def generarVectorRandomNormalizado(size:int, p:int) -> Vector:
     """
     Genera un vector random normalizado
     """
@@ -48,7 +48,7 @@ def generarVectorRandomNormalizado(size:int, p:int):
     return x/norma(x, p)
 
 
-def normaMatMC(A:Matriz, q:int, p:int, Np:int):
+def normaMatMC(A:Matriz, q:int, p:int, Np:int) -> Tuple[float, Vector]:
     """
     Método Monte Carlo:
     Estima ||A||q,p usando Np vectores de x de R^n
@@ -73,7 +73,7 @@ def normaMatMC(A:Matriz, q:int, p:int, Np:int):
         key=lambda t: t[1]
     )
 
-def norma1Exacta(A:Matriz):
+def norma1Exacta(A:Matriz) -> float:
     """
     Calcula la norma 1
     - Es la suma más grande de las columnas en modulo
@@ -92,7 +92,7 @@ def norma1Exacta(A:Matriz):
         for j in range(c)
     ])
 
-def normaInfExacta(A:Matriz):
+def normaInfExacta(A:Matriz) -> float:
     """
     Calcula la norma inf
     - Es la suma más grande de las filas en modulo
@@ -109,7 +109,7 @@ def normaInfExacta(A:Matriz):
             for i in range(c)
         ])
     
-def condMc(A: Matriz, p:int, _ITERS=500000):
+def condMc(A: Matriz, p:int, _ITERS=500000) -> float:
     """
     Estima el nro de condicion (k) usando la norma inducida p
     """
@@ -128,9 +128,9 @@ def condMc(A: Matriz, p:int, _ITERS=500000):
     estimated_k = norm_A * norm_A_inv
     return estimated_k
 
-def variaPerc(b:Vector, perc:int):
+def variaPerc(b:Vector, perc:int) -> Vector:
     """ 
-    Varia un vector un porcentaje dado
+    Varia un vector un porcentaje `perc` dado
     """
     numeroAleatorioEntre = lambda desde, hasta: \
         np.random.uniform(desde, hasta) 
@@ -139,3 +139,70 @@ def variaPerc(b:Vector, perc:int):
         for c in b
     ]
 
+def generarVectorCentrado(
+    x0: Vector
+) -> Vector:
+    """
+    Genera un vector centrado a x0
+    """
+    return 
+
+
+def normaMatLJ(
+    A:Matriz,
+    q:int,
+    p:int,
+    Np:int,
+    maxiter=1000,
+    variacion=2,
+    rate=0.95
+) -> float:
+    """
+    Calcula la norma matricial usando el método
+    Luus-Jaakola
+    """
+
+    # Generamos Np vectores unitarios random
+    vectoresRandoms = [
+        generarVectorRandomNormalizado(size=q, p=p)
+        for _ in range(Np)
+    ]
+
+    # Definimos como x0 al vector que maximiza ||Ax|| 
+    x0, norma0 = max(
+        [
+            (x, norma(A@x, p)) for x in vectoresRandoms
+        ],
+        lambda y: y[1]
+    )
+
+    for _ in range(maxiter):
+        # Generamos Np muestras centradas en x0 con valores 
+        # uniformemente distribuidos entre x0 + variacion 
+        # y x0-variacion. (np.random.uniform)
+
+        muestrasCentradas = [
+            generarVectorCentrado(x0) 
+            for _ in range(Np)
+        ]        
+
+        muestrasCentradasNormalizadas = [
+            normaliza(v,p) 
+            for v in muestrasCentradas
+        ]
+
+        x1, norma1 = max(
+            [
+                (x, norma(A@x, p)) for x in muestrasCentradasNormalizadas
+            ],
+            lambda y: y[1]
+        )
+
+        if norma1 > norma0:
+            x0 = x1 
+            norma0 = norma1
+
+        continue 
+
+
+    return 0

@@ -1,7 +1,28 @@
+# Temas segundo parcial
+
+## 📊 Existencia de Descomposiciones Matriciales
+
+| Descomposición | Forma | Tipo de Matriz Requerida | ¿Existe para **Toda Matriz** $\boldsymbol{A}$? | Notas Clave |
+| :--- | :--- | :--- | :--- | :--- |
+| **SVD** (Valores Singulares) | $\boldsymbol{A} = \boldsymbol{U} \boldsymbol{\Sigma} \boldsymbol{V}^*$ | Ninguna (Cualquier matriz $m \times n$). | **SÍ** ✅ | Es la factorización más general y universal. |
+| **Schur** (Triangularización) | $\boldsymbol{A} = \boldsymbol{U} \boldsymbol{T} \boldsymbol{U}^*$ | Cuadrada ($n \times n$). | **SÍ** (Si es cuadrada) ✅ | $\boldsymbol{T}$ es triangular superior y $\boldsymbol{U}$ es unitaria. |
+| **QR** (Ortogonal/Triangular) | $\boldsymbol{A} = \boldsymbol{Q} \boldsymbol{R}$ | Ninguna (Cualquier matriz $m \times n$ con $m \ge n$). | **SÍ** ✅ | $\boldsymbol{Q}$ es ortogonal/unitaria, $\boldsymbol{R}$ es triangular superior. |
+| **LU** (Lower/Upper) | $\boldsymbol{A} = \boldsymbol{L} \boldsymbol{U}$ | Cuadrada ($n \times n$). | **NO** ❌ | Solo existe si todos los **menores principales** son distintos de cero. Siempre existe con permutación: $\boldsymbol{P}\boldsymbol{A} = \boldsymbol{L}\boldsymbol{U}$. |
+| **Cholesky** | $\boldsymbol{A} = \boldsymbol{L} \boldsymbol{L}^*$ (o $\boldsymbol{L}\boldsymbol{L}^T$) | Cuadrada ($n \times n$), **Hermitiana** (Simétrica), y **Definida Positiva**. | **NO** ❌ | Es la descomposición más restrictiva. Es única si existe. |
+
 ## ¿Cómo diagonalizo una matríz?
 
-##### <u>Procedimiento:</u>
-> 1. Determinar si A es diagonalizable (ej. Teo. Espectral).
+#### Existencia
+$A \text{ diagonalizable} \\
+\iff \text{Los vectores columna de A forman una base} \\
+\iff \text{Existen n autovectores LI (vectores columna de A)} \\
+\iff \text{Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i) \\
+\iff \text{Es semejante a una matriz diagonal} \\
+\iff A = PDP^{-1} \\
+\iff A^m = PD^mP^{-1}$
+
+#### Procedimiento:
+> 1. Determinar si A es diagonalizable.
 > 2. Hallar autovalores $\lambda_1, ..., \lambda_n$ de A. 
 > - Definir $D = \begin{pmatrix} \lambda_1 & 0 & ... & 0 & 0 \\
 0 & \lambda_2 & ... & 0 & 0 \\
@@ -15,7 +36,7 @@
 
 ## ¿Cómo calculo una descomposicion Shur?
 
-Teo: Toda matriz $A$ es unitariamente semejante a una matríz triangular superior ($\exists U \text{ unitaria y } T \text{ triangular: } A=UTU^*$).
+Toda matriz $A$ es unitariamente semejante a una matríz triangular superior ($\exists U \text{ unitaria y } T \text{ triangular: } A=UTU^*$).
 
 Cualquier matríz cuadrada $A$ puede ser escrita como $A = QUQ^*$, con $Q$ matríz unitaria ($Q* = Q^{-1}$) y $D$ diagonal.
 
@@ -54,10 +75,14 @@ Calcular SVD para $A^*$ sale de...
 $$A^* = (U \Sigma V^*)^* = V \Sigma^t U^*$$
 
 #### Propiedades para $A=U\Sigma V^*$
+Sea también $r = rk(A) = \# \{ \sigma_i \in \mathbb{K}_{\neq 0}: \text{ valores singulares no nulos de } A\}$
 - $Im(A) = < u_1, ..., u_r >$
 - $Im(A^t) = < v_1, ..., v_r >$
 - $Nu(A) = < v_{r+1}, ..., v_{n} >$
 - $Nu(A^t) = < u_{r+1}, ..., u_{m} > = Nu(A^tA)$
+- $||A||_2 = \sigma_1(A)$
+
+<img src='../img/def_pos.png'>
 
 ## Procesos de Markov.
 
@@ -70,26 +95,25 @@ Una matriz de transición $A$ cumple las siguientes propiedades:
 - $\sum_i A_ij = 1$, $\forall j$
 - 1 es autovalor de $A$.
 - Si $\lambda$ es autovalor entonces $|\lambda| < 1$.
-- Si $\lambda \neq 1$ es autovalor y $x$ es autovector asociado entonces $\sum_i x_i = 0$
 - $mg(\lambda) = ma(\lambda)$
+- No toda matríz de Markov es diagonalizable, pero si lo es $A = PDP^{-1} \rightarrow v^{(k+1)} = A^k v^{(0)} = PD^{k}P^{-1}v^{(0)}$
 
-Obs: No toda matríz de Markov es diagonalizable, pero si lo es $A = PDP^{-1} \rightarrow v^{(k+1)} = A^k v^{(0)} = PD^{k}P^{-1}v^{(0)}$
+#### Existencia de estado límite/equilibrio
+Un vector $v$ se dice estado de equilibrio si $Av=v$. Es un autovector asociado para $\lambda=1$.
 
-#### Estado de equilibrio
-Un vector $v$ se dice estado de equilibrio si $Av=v$.
-Es un autovector asociado para $\lambda=1$.
+Toda matriz de Markov tiene estado de equilibrio: $Av^* = v^*$
 
-#### Estado límite
-Dado $v^{(0)}$, es el estado $v^* = \lim_{k \rightarrow \inf} A^k v^0$ 
-$\exists A^{\inf} \iff \text{no hay autovalores de modulo 1 que no sean el 1}$ 
+#### Convergencia de estado límite/equilibrio
 
-Si $P$ tiene otros autovalores de módulo 1 además de $\lambda=1$, entonces no converge una única distribución estacionaria global, sino que puede haber oscilaciones o ciclos en la cadena de Markov.
+El método ($v^{(k+1)}=Av^{(k)}$) converge para cualquier $v^{(0)} \iff \\ \exists ! \lambda_i : \text{ autovalor de A tal que } (\lambda_i = 1 \land (\forall \lambda_j: \text{ autovalor de A: } \lambda_j \neq \lambda_i \rightarrow |\lambda_j|<1)) \\ \iff \exists A^{\inf} \\ \iff \text{ la cadena de Markov asociada es irreducible}$ 
+ 
 
-> Si v^(0) es ortogonal a los autovectores asociados a los autovalores complejos de módulo 1, entonces v^(k) sí puede converger. 
-> Si v^(0) tiene componente en dirección de esos autovectores, entonces v^(k) no converge (por ejemplo, oscila).
+##### Cadenas reducibles o irreducibles
+- Se dice que una **cadena de Markov es irreducible** si $dim(Ker(A-I))=dim(E_A(\lambda=1)) = 1$.
+- Si la **cadena de Markov es reducible** ($dim(E_A(\lambda=1))$) entonces la convergencia depende de $v^{(0)}$. 
 
-Conclusión clave
-La existencia del estado límite v^(∞) puede depender de v^(0) cuando la matriz P tiene autovalores de módulo 1 distintos de λ=1. En cambio, si P^∞ existe (es decir, solo λ=1 está en la circunferencia unitaria), entonces el estado límite existe para cualquier v^(0) y es igual al vector estacionario π. 
+    Si $v^{(0)}$ es ortogonal a los autovectores asociados a los autovalores de módulo 1, entonces $v^{(k)}$ sí puede converger. 
+    Si $v^{(0)}$ tiene componente en dirección de esos autovectores, entonces $v^{(k)}$ no converge (por ejemplo, oscila).
 
 ## Cuadrados mínimos
 Queremos aproximar una solución de $Ax=b$.
@@ -174,6 +198,8 @@ Con: $\rho(T) = \max{ |\lambda| : \lambda \text{ autovalor de T} }$
 A veces se escribe $B=T$, como la matríz de iteración.
 
 #### Método Jacobi
+
+
 $x^{(n+1)} = -D^{-1}(L+U)x^{(n)} + D^{-1}b$
 
 #### Método Gauss-Seidel
@@ -193,7 +219,7 @@ El radio espectral $\rho(T)$ de la matriz de iteración $T$ determina si un mét
 - Si $\rho(B)<1$: el método converge .
 - Si $\rho(B)=1$: puede no converger o converger muy lentamente.
 - Si $\rho(B)>1$ : el método diverge .
-Cuanto menor sea $\rho(B)$, más rápida será la convergencia .
+- Cuanto menor sea $\rho(B)$, más rápida será la convergencia .
 
 ### Propiedades
 
@@ -221,6 +247,6 @@ Cuanto menor sea $\rho(B)$, más rápida será la convergencia .
 
 - Si $M$ es real y simétrica y $v,w$ son autovectores de autovalores diferentes, entonces $v, w$ son ortogonales.
 
-- Pseudoinversa: $$A^{+} = (A^tA)^{-1}A^t$$
+- Pseudoinversa: $A^{+} = (A^tA)^{-1}A^t$
 
 

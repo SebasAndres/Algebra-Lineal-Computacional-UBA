@@ -12,7 +12,7 @@
 
 ## ¿Cómo diagonalizo una matríz?
 
-#### Existencia
+### Existencia
 $A \text{ diagonalizable} \\
 \iff \text{Los vectores columna de A forman una base} \\
 \iff \text{Existen n autovectores LI (vectores columna de A)} \\
@@ -21,37 +21,37 @@ $A \text{ diagonalizable} \\
 \iff A = PDP^{-1} \\
 \iff A^m = PD^mP^{-1}$
 
-#### Procedimiento:
-> 1. Determinar si A es diagonalizable.
-> 2. Hallar autovalores $\lambda_1, ..., \lambda_n$ de A. 
-> - Definir $D = \begin{pmatrix} \lambda_1 & 0 & ... & 0 & 0 \\
-0 & \lambda_2 & ... & 0 & 0 \\
-... & ... & ... & ... & ... \\
-... & ... & ... & ... & \lambda_n \\
+### Procedimiento:
+1. Determinar si A es diagonalizable.
+2. Hallar autovalores $\lambda_1, ..., \lambda_n$ de A. 
+3. Definir $D = \begin{pmatrix} \lambda_1 & 0 & ... & 0 & 0 \\
+0 & \lambda_2 & . & 0 & 0 \\
+. & . & . & . & . \\
+. & . & . & . & \lambda_n \\
 \end{pmatrix}$
-> 3. Hallar autovectores $v_1, ..., v_n$ de A. 
-> - Definir $Q = (v_1| ... | v_n)$.
-> 4. Escribir $A = QDQ^*$
+4. Hallar autovectores $v_1, ..., v_n$ de A. 
+5. Definir $Q = (v_1| ... | v_n)$.
+6. Escribir $A = QDQ^*$
+
+### Observación: 
+En toda diagonalizacion de una matriz, la diagonal tiene los autovalores de esa matriz.
+
+## Descomposición Shur
+
+- Toda matriz $A$ es unitariamente semejante a una matríz triangular superior ($\exists U \text{ unitaria y } T \text{ triangular: } A=UTU^*$).
+
+- Cualquier matríz cuadrada $A$ puede ser escrita como $A = QUQ^*$, con $Q$ matríz unitaria ($Q* = Q^{-1}$) y $D$ diagonal.
+
+### Procedimiento:
+1. Encontrar un autovector
+2. Completar una b.o.n para $Q_1$ con el autovector
+3. Calcular $Q_1^* A Q_1$
+4. Repetir los pasos anteriores para la submatriz del resultado, pisando los valores en las submatrices de $Q$ y $A$.
 
 
-## ¿Cómo calculo una descomposicion Shur?
-
-Toda matriz $A$ es unitariamente semejante a una matríz triangular superior ($\exists U \text{ unitaria y } T \text{ triangular: } A=UTU^*$).
-
-Cualquier matríz cuadrada $A$ puede ser escrita como $A = QUQ^*$, con $Q$ matríz unitaria ($Q* = Q^{-1}$) y $D$ diagonal.
-
-##### <u>Procedimiento:</u>
-> 1. Encontrar un autovector
-> 2. Completar una b.o.n para $Q_1$ con el autovector
-> 3. Calcular $Q_1^* A Q_1$
-> 4. Repetir los pasos anteriores para la submatriz del resultado, pisando los valores en las submatrices de $Q$ y $A$.
-
-
-## ¿Cómo calculo una descomposicion SVD?
-
+## Descomposición SVD
 La descomposición en valores singulares de una matríz $A \in \mathbb{C} ^{m\times n}$ es un producto de la forma
-$$A = U 
-\Sigma V^*$$
+$$A = U \Sigma V^*$$
 
 Con:
 - $U \in \mathbb{C}^{m \times m}$: Las columnas $u_1, ..., u_m$ vienen dadas por la relación $Av_j = \sigma_j u_j$ con $j=1...n$.
@@ -62,28 +62,70 @@ Pueden pasar dos casos:
 - $m>n$: En tal situacion se completan las columnas de $U$ para tener una b.o.n en $\mathbb{C}^m$.
 - $m<n$: Hay varios $v_j$ asociados a un autovalor 0. Si $\sigma_j=0$ para algun $j\leq \min(n,m)$ entonces se puede elegir $u_j$ completando la ortonormalidad de las columnas de $U$.
 
-##### <u>Procedimiento:</u>
-Sea $A\in\mathbb{C}^{m\times n}$...
-> 1. Calcular $A^*A$
-> 2. Calcular los autovalores y autovectores de $A^*A$
-> 3. Formar las matrices $U, \Sigma, V^T$:
-> - $V$ son los autovectores normalizados de $A^*A$.
-> - $\Sigma$ es la matriz diagonal $\mathbb{C}^{m\times n}$ con los $\sigma_i = \sqrt{\lambda_i}$.
-> - $U$ la calculamos con la relación $Av_i = \sigma_i u_i$ para cada $v_i$ $(i = 1...n)$ y luego completando una base ortonormal de para $u_n ... u_m$. 
+### Observaciones:
+- $A^*A=(U\Sigma V^*)^*U\Sigma V^* = V \Sigma^* U^* U \Sigma V^* = V \Sigma^* \Sigma V^*$
+- $AA^*=U\Sigma V^*(U\Sigma V^*)^* = U \Sigma V^* V \Sigma^* U^* = U \Sigma \Sigma^* U^*$
+- Como $\Sigma$ es diagonal: 
+    - **Si es cuadrada** vale que $\Sigma^* \Sigma = \Sigma^2$.
+    - $\Sigma^* \Sigma$ y $\Sigma \Sigma^*$ son semejantes a $\Sigma^2$.
+- Calcular SVD para $A^*$ sale de $A^* = (U \Sigma V^*)^* = V \Sigma^t U^*$
 
-Calcular SVD para $A^*$ sale de...
-$$A^* = (U \Sigma V^*)^* = V \Sigma^t U^*$$
+### Procedimiento:
+Sea $A\in\mathbb{C}^{m\times n}$:
+1. Calcular $A^*A$ (o $AA^*$)
+2. Calcular los autovalores y autovectores de $A^*A$
+3. Formar las matrices $U, \Sigma, V^T$:
+    - $V$ son los autovectores normalizados de $A^*A$.
+    - $\Sigma$ es la matriz diagonal $\mathbb{C}^{m\times n}$ con los $\sigma_i = \sqrt{\lambda_i}$.
+    - $U$ la calculamos con la relación $Av_i = \sigma_i u_i$ para cada $v_i$ $(i = 1...n)$ y luego completando una base ortonormal de para $u_n ... u_m$. 
 
-#### Propiedades para $A=U\Sigma V^*$
+### Propiedades para $A=U\Sigma V^*$
 Sea también $r = rk(A) = \# \{ \sigma_i \in \mathbb{K}_{\neq 0}: \text{ valores singulares no nulos de } A\}$
+
+- $||A||_2 = \sigma_1(A)$
+
+- $\text{A es matríz invertible (rango completo y cuadrada)} \rightarrow \text{cond}_2(\boldsymbol{A}) = \frac{\sigma_{\max}}{\sigma_{\min}} = \frac{\sigma_1}{\sigma_n}$
+
+- En términos de SVD ($A = U\Sigma V^T$), una matriz es ortogonal si y solo si todos sus **valores singulares son iguales a 1** ($\Sigma = I$).
+
+- $\max_{\|x\|_2=1} \|Ax\|_2 = \|A\|_2 = \sigma_1$
+
+    $\text{Demo: } \\
+    \max_{\|x\|_2=1} \|Ax\|_2 =  \\
+    \max_{\|x\|_2=1} \|U\Sigma V^* x\|_2 = \\
+    \max_{\|x\|_2=1} \|\Sigma V^* x\|_2 = \\
+    \max_{\|x\|_2=1} \|\Sigma y \|_2 =    \\
+    \sum_{i=1}^n{\sigma_i^2 y_i^2} \\
+    \leq \sigma_1 * \sum_{i=1}^n{y_i^2}
+    = \sigma_1 * \|y\|_2 \\
+    = \sigma_1 
+    $
+
+
+- $\min_{\|x\|_2=1} \|Ax\|_2 = \sigma_n$
+
+    $\text{Demo: } \\
+    \max_{\|x\|_2=1} \|Ax\|_2 =  \\
+    \max_{\|x\|_2=1} \|U\Sigma V^* x\|_2 = \\
+    \max_{\|x\|_2=1} \|\Sigma V^* x\|_2 = \\
+    \max_{\|x\|_2=1} \|\Sigma y \|_2 =    \\
+    \sum_{i=1}^n{\sigma_i^2 y_i^2} \\
+    \geq \sigma_n * \sum_{i=1}^n{y_i^2}
+    = \sigma_n * \|y\|_2 \\
+    = \sigma_n 
+    $
+
+
 - $Im(A) = < u_1, ..., u_r >$
 - $Im(A^t) = < v_1, ..., v_r >$
 - $Nu(A) = < v_{r+1}, ..., v_{n} >$
 - $Nu(A^t) = < u_{r+1}, ..., u_{m} > = Nu(A^tA)$
-- $||A||_2 = \sigma_1(A)$
-- $\text{cond}_2(\boldsymbol{A}) = \frac{\sigma_{\max}}{\sigma_{\min}} = \frac{\sigma_1}{\sigma_n}$
 
-<img src='../img/def_pos.png'>
+| Tipo de Matriz | Condición de Forma Cuadrática | Condición de Autovalores ($\lambda_i$) | Consecuencia en $\text{det}(A)$ |
+| :--- | :--- | :--- | :--- |
+| **Definida Positiva (DP)** | $\boldsymbol{x}^* \boldsymbol{A} \boldsymbol{x} > 0$ para todo $\boldsymbol{x} \ne \boldsymbol{0}$ | **Todos $\boldsymbol{\lambda_i > 0}$** | $\text{det}(\boldsymbol{A}) > 0$ |
+| **Semidefinida Positiva (SDP)** | $\boldsymbol{x}^* \boldsymbol{A} \boldsymbol{x} \ge 0$ para todo $\boldsymbol{x}$ | **Todos $\boldsymbol{\lambda_i \ge 0}$** | $\text{det}(\boldsymbol{A}) \ge 0$ |
+
 
 ## Procesos de Markov.
 
@@ -100,13 +142,10 @@ Una matriz de transición $A$ cumple las siguientes propiedades:
 - No toda matríz de Markov es diagonalizable, pero si lo es $A = PDP^{-1} \rightarrow v^{(k+1)} = A^k v^{(0)} = PD^{k}P^{-1}v^{(0)}$
 
 #### Existencia de estado límite/equilibrio
-Un vector $v$ se dice estado de equilibrio si $Av=v$. Es un autovector asociado para $\lambda=1$.
-
-Toda matriz de Markov tiene estado de equilibrio: $Av^* = v^*$
+Un vector $v$ se dice estado de equilibrio si $Av=v$. Es un autovector asociado para $\lambda=1$. Toda matriz de Markov tiene estado de equilibrio: $Av^* = v^*$
 
 #### Convergencia de estado límite/equilibrio
-
-El método ($v^{(k+1)}=Av^{(k)}$) converge para cualquier $v^{(0)} \iff \\ \exists ! \lambda_i : \text{ autovalor de A tal que } (\lambda_i = 1 \land (\forall \lambda_j: \text{ autovalor de A: } \lambda_j \neq \lambda_i \rightarrow |\lambda_j|<1)) \\ \iff \exists A^{\inf} \\ \iff \text{ la cadena de Markov asociada es irreducible}$ 
+El método ($v^{(k+1)}=Av^{(k)}$) converge para cualquier $v^{(0)} \iff \\ \exists ! \lambda_i : \text{ autovalor de A tal que } (\lambda_i = 1 \land (\forall \lambda_j: \text{ autovalor de A: } \lambda_j \neq \lambda_i \rightarrow |\lambda_j|<1)) \\ \iff \exists A^{\inf} \\ \iff \text{La cadena de Markov asociada es irreducible}$ 
  
 
 ##### Cadenas reducibles o irreducibles

@@ -81,6 +81,7 @@ Sea también $r = rk(A) = \# \{ \sigma_i \in \mathbb{K}_{\neq 0}: \text{ valores
 - $Nu(A) = < v_{r+1}, ..., v_{n} >$
 - $Nu(A^t) = < u_{r+1}, ..., u_{m} > = Nu(A^tA)$
 - $||A||_2 = \sigma_1(A)$
+- $\text{cond}_2(\boldsymbol{A}) = \frac{\sigma_{\max}}{\sigma_{\min}} = \frac{\sigma_1}{\sigma_n}$
 
 <img src='../img/def_pos.png'>
 

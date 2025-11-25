@@ -239,20 +239,33 @@ A veces se escribe $B=T$, como la matríz de iteración.
 
 #### Método Jacobi
 
-
-$x^{(n+1)} = -D^{-1}(L+U)x^{(n)} + D^{-1}b$
+$$
+Ax = (D+L+U)x = Dx+(L+U)x = b\\
+Dx = -(L+U)x + b \\
+x = -D^{-1}(L+U)x + D^{-1}b \\
+x^{(n+1)} = -D^{-1}(L+U)x^{(n)} + D^{-1}b
+$$
 
 #### Método Gauss-Seidel
-$x^{(n+1)} = -(D+L)^{-1}Ux^{(n)} + (D+L)^{-1}b$
+$$
+Ax = (D+L+U)x = (D+L)x+Ux = b \\
+(D+L)x = - Ux + b \\
+x = -(D+L)^{-1}Ux + (D+L)^{-1}b \\
+x^{(n+1)} = -(D+L)^{-1}Ux^{(n)} + (D+L)^{-1}b
+$$
+
+#### Método SOR
+
+$s$
+
+#### Método gradiente
+$s$
 
 #### Propiedades
 - $T = -M^{⁻1}N \land \lambda \text{ autovalor de T} \iff det(\lambda M + N) = 0$ 
 - El método converge en $n$ pasos si $T^n = 0$.
-- $A$ matriz cuadrada y tridiagonal ($|a_{ij}=0| si |j-i|>1$) con $a_{ii}\neq 0$ para todo $i=1...n$. Entonces $\rho(B_{GS}) = \rho(B_j)^2$
-- Para toda norma subordinada $||.||$ vale que:
-    $$\rho(B) = lim_{n \rightarrow \inf} || B^n ||^{1/n}$$
-- $x^* = Bx^* + c$
-- $err_k = x_k - x^* = B_{gs} * err_{k-1} = B_{gs} * (x_{k-1} - x^*)$
+- $A$ matriz cuadrada y tridiagonal, entonces $\rho(B_{GS}) = \rho(B_j)^2$
+- Para toda norma subordinada $||.||$ vale que: $\rho(B) = lim_{n \rightarrow \inf} || B^n ||^{1/n}$
 
 #### Radio espectral
 El radio espectral $\rho(T)$ de la matriz de iteración $T$ determina si un método iterativo converge y qué tan rápido lo hace. 
@@ -261,7 +274,7 @@ El radio espectral $\rho(T)$ de la matriz de iteración $T$ determina si un mét
 - Si $\rho(B)>1$ : el método diverge .
 - Cuanto menor sea $\rho(B)$, más rápida será la convergencia .
 
-### Propiedades
+### Más propiedades
 
 - $A$ es hermitana $\iff$ $A=A^*$. 
 

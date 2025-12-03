@@ -11,7 +11,7 @@
     6. [Cambio de base](#16-cambio-de-base)
     7. [Traza (propiedades)](#17-traza-propiedades)
     8. [Determinante (propiedades)](#18-determinante-propiedades)
-2. [Transformaciones Lineales](#2-transformaciones-lineales)
+2. [Transformaciones Lineales y Cambio de Base](#2-transformaciones-lineales-y-cambio-de-base)
 3. [Proyecciones](#3-proyecciones)
     1. [Proyecciones en General](#31-proyecciones-en-general)
     2. [Proyección Ortogonal](#32-proyección-ortogonal)
@@ -86,42 +86,121 @@ Más propiedades:
 - Para obtener una base a partir de generadores puedo poner los vectores en filas, triangular la matríz y ver que, las filas que se vuelven 0 podemos sacarlas, y si se vuelven CL sacar 1.
 - Para extender generados para formar una base puedo alinear los vectores como filas y completar las filas para que la matriz triangulada quede LI.
 
-### 1.6. Cambio de base
-- **Coordenadas**: Sea $V = \langle v_0, ..., v_m \rangle$. Se llama coordenadas de $v = \sum_i^m \alpha_i v_i \in V$ en base $B=\{v_1, ..., v_m\}$ al vector $[w]_B = (\alpha_0, ..., \alpha_m)$. 
-- **Matriz cambio de base**: Si quiero escribir a $w$ en otra base $B'=\{  z_1, ..., z_n \}$ y tengo las coordenadas en la base $B$. Vale que:
-  - En base canónica: $w=[v_1 | ... | v_m]\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix} = C_{BE}\begin{pmatrix} \alpha_1 \\ ... \\ \alpha_n \end{pmatrix}$
-  - $w = [z_1 | ... | z_n]\begin{pmatrix} \beta_1 \\ ... \\ \beta_n \end{pmatrix} = C_{B'E}\begin{pmatrix} \beta_1 \\ ... \\ \beta_n \end{pmatrix}$
+## 2. Transformaciones Lineales y Cambio de Base
 
-Luego, juntando:
-$$w=C_{BE}[w]_B = C_{B'E}[w]_{B'}$$
-Entonces
-$[w]_{B'} = C_{B'E}^{-1}C_{BE}[w]_B$
+Esta sección unifica el concepto abstracto de función lineal con su implementación práctica a través de matrices y coordenadas.
 
-Donde $C_{BB'}=C_{B'E}^{-1}C_{BE}$ es la "matriz de cambio de base".
+### 2.1. Definición y Propiedades Básicas
 
-> Observación:
-> $C_{AB}$ es la nomenclatura para la matriz de cambio de base que recibe en $A$ y devuelve en $B$.
+Sean $\mathbb{V}$ y $\mathbb{W}$ dos $\mathbb{K}$-espacios vectoriales. Una función $f: \mathbb{V} \rightarrow \mathbb{W}$ es una **Transformación Lineal** si conserva la estructura de espacio vectorial, es decir:
 
-### 1.7. Traza (propiedades)
-- $tr(A+B) = tr(A) + tr(B)$
-- $tr(\alpha A)=\alpha tr(A)$
-- $tr(A^T) = tr(A)$
-- $tr(AB) = tr(BA)$
+$$f(\alpha u + v) = \alpha f(u) + f(v), \quad \forall u, v \in \mathbb{V}, \forall \alpha \in \mathbb{K}$$
 
-### 1.8. Determinante (propiedades)
-- Solo vale para matrices cuadradas.
-- Si $A$ es triangular superior, $det(A) = \prod_{i=0}^n A_{ii}$
-- $det(A) = det(A^T)$
-- $det(kA) = k^n det(A)$, donde $n$ es el tamaño de la matriz cuadrada $A$ (es decir, $A \in \mathbb{K}^{n \times n}$)
-- $det(AB) = det(A) det(B)$
-- Si $A$ es invertible $\implies det(A^{-1}) = \frac{1}{det(A)}$
-- $A$ inversible $\iff det(A) \neq 0$
+#### Propiedades inmediatas:
 
-## 2. Transformaciones Lineales
-Sean $\mathbb{V}, \mathbb{W}$ dos $\mathbb{K}$ espacios vectoriales. Una funcion $f: \mathbb{V} \rightarrow \mathbb{W}$ se dice que es una transformacion si para todo $u,v \in \mathbb{V}$ y $\lambda \in \mathbb{K}$, vale que:
-$$f(\lambda u + v) = \lambda f(u) + f(v)$$
+1.  **El cero va al cero:** $f(0_\mathbb{V}) = 0_\mathbb{W}$.
 
-> Teorema: Si $B$ es una base de $\mathbb{V}$ y $f: \mathbb{V} \rightarrow \mathbb{W}$, entonces $f(B)$ contiene una base de $Im(f)$.
+2.  **Inversos aditivos:** $f(-v) = -f(v)$.
+
+3.  **Preservación de combinaciones lineales:** $f(\sum \alpha_i v_i) = \sum \alpha_i f(v_i)$.
+
+### 2.2. Núcleo e Imagen
+
+Son los dos subespacios fundamentales asociados a una T.L.:
+
+* **Núcleo (Kernel):** Es el conjunto de vectores del dominio que se transforman en el cero.
+
+    $$\ker(f) = \{ v \in \mathbb{V} : f(v) = 0_\mathbb{W} \}$$
+
+    * **Propiedad:** $f$ es inyectiva (monomorfismo) $\iff \ker(f) = \{0\}$.
+
+* **Imagen:** Es el conjunto de vectores del codominio que son "alcanzados" por la función.
+
+    $$\operatorname{Im}(f) = \{ w \in \mathbb{W} : \exists v \in \mathbb{V}, f(v) = w \}$$
+
+    * **Propiedad:** $f$ es sobreyectiva (epimorfismo) $\iff \operatorname{Im}(f) = \mathbb{W}$.
+
+#### Teorema de la Dimensión (Teorema del Rango-Nulidad)
+
+Si $\mathbb{V}$ es de dimensión finita:
+
+$$\dim(\mathbb{V}) = \dim(\ker(f)) + \dim(\operatorname{Im}(f))$$
+
+---
+
+### 2.3. Representación Matricial de una T.L.
+
+Toda transformación lineal entre espacios de dimensión finita puede representarse mediante una matriz. La forma de esta matriz depende de las bases elegidas.
+
+Sean $B = \{v_1, \dots, v_n\}$ una base de $\mathbb{V}$ y $B' = \{w_1, \dots, w_m\}$ una base de $\mathbb{W}$.
+
+La **matriz asociada a $f$ en las bases $B$ y $B'$**, denotada como $[f]_{BB'}$ (o $M(f)_{BB'}$), se construye colocando en sus columnas las coordenadas de las imágenes de los vectores de la base $B$ escritas en la base $B'$.
+
+$$[f]_{BB'} = \begin{pmatrix} | & & | \\ [f(v_1)]_{B'} & \cdots & [f(v_n)]_{B'} \\ | & & | \end{pmatrix}$$
+
+#### Relación fundamental:
+
+Para transformar un vector $v$, multiplicamos sus coordenadas por la matriz:
+
+$$[f(v)]_{B'} = [f]_{BB'} \cdot [v]_B$$
+
+---
+
+### 2.4. Matriz de Cambio de Base (Vectores)
+
+Si queremos cambiar las coordenadas de un vector de una base a otra dentro del mismo espacio $\mathbb{V}$:
+
+Sean $B = \{v_1, \dots, v_n\}$ y $B' = \{u_1, \dots, u_n\}$ dos bases de $\mathbb{V}$.
+
+La **Matriz de Cambio de Base de $B$ a $B'$**, denotada como $C_{BB'}$, cumple que:
+
+$$[v]_{B'} = C_{BB'} \cdot [v]_B$$
+
+#### Propiedades de $C_{BB'}$:
+
+1.  **Construcción:** Las columnas de $C_{BB'}$ son las coordenadas de los vectores de la base "vieja" $B$ escritos en función de la base "nueva" $B'$.
+
+2.  **Inversibilidad:** Toda matriz de cambio de base es inversible.
+
+3.  **Inversa:** $C_{B'B} = (C_{BB'})^{-1}$.
+
+4.  **Composición:** $C_{BB''} = C_{B'B''} \cdot C_{BB'}$.
+
+> **Nota práctica:** Es fácil construir la matriz de cambio de base $C_{BE}$ (de una base $B$ cualquiera a la canónica $E$), simplemente poniendo los vectores de $B$ como columnas. Para volver (de canónica a $B$), calculamos la inversa: $C_{EB} = (C_{BE})^{-1}$.
+
+---
+
+### 2.5. Cambio de Base en Transformaciones Lineales
+
+¿Cómo cambia la matriz de una T.L. si cambiamos las bases del espacio?
+
+Sea $f: \mathbb{V} \rightarrow \mathbb{V}$ un endomorfismo (T.L. de un espacio en sí mismo).
+
+* Sea $A = [f]_{BB}$ la matriz de $f$ en base $B$.
+
+* Sea $A' = [f]_{B'B'}$ la matriz de $f$ en base $B'$.
+
+* Sea $P = C_{B'B}$ la matriz de cambio de base de $B'$ a $B$.
+
+La relación entre ambas matrices está dada por la ecuación de semejanza:
+
+$$A' = P^{-1} A P$$
+
+O escrito con la notación de coordenadas:
+
+$$[f]_{B'B'} = C_{BB'} [f]_{BB} C_{B'B}$$
+
+#### Interpretación del Diagrama Conmutativo:
+
+Para aplicar $f$ en la base $B'$ usando la matriz en base $B$:
+
+1.  Transformamos de $B'$ a $B$ ($C_{B'B}$).
+
+2.  Aplicamos la transformación en $B$ ($[f]_{BB}$).
+
+3.  Volvemos de $B$ a $B'$ ($C_{BB'}$).
+
+> **Conclusión Clave:** Dos matrices representan la misma transformación lineal en distintas bases si y solo si son **semejantes**. Esto implica que comparten propiedades intrínsecas como el determinante, la traza y los autovalores.
 
 ## 3. Proyecciones
 

@@ -355,30 +355,30 @@ Podemos calcularla usando Gram-Schmidt o Householder.
     Donde los elementos en la diagonal son $r_{kk} = \|\mathbf{v}_k\|$.
 
 ## 8. Teoremas y propiedades
-- $$ A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$$
+- $ A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$
 
 ### 8.1. Definida positiva
-- $$A \text{ es definida positiva } \iff A=LU \text{ con } U_{ii} > 0 \text{ para } \forall i \in \{1 .. n\}$$
+- $A \text{ es definida positiva } \iff A=LU \text{ con } U_{ii} > 0 \text{ para } \forall i \in \{1 .. n\}$
 
 ### 8.2. Inversible
-- $$A \text{ inversible} \iff det(A) = 0 \iff \exists v \neq 0 | Av = 0$$
-- $$ A \text { no es inversible } \iff \lambda=0 \text{ es autovalor}$$
-- $$A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base} $$
+- $A \text{ inversible} \iff det(A) = 0 \iff \exists v \neq 0 | Av = 0$
+- $ A \text { no es inversible } \iff \lambda=0 \text{ es autovalor}$
+- $A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base}$
 
 ### 8.3. Diagonalizable
-- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovalores distintos }$$
-- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovectores LI (vectores columna de A)}$$
-- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i)$$
-- $$ A\in K^{N\times N} \text { es diagonalizable } \iff A = PDP^{-1}, D \text{ diagonal }$$
-- $$ A\in K^{N\times N} \text { es diagonalizable } \iff A^m = PD^mP^{-1}$$
-- $$ A \text{ es diagonalizable si es semejante a una matriz diagonal}$$
+- $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovalores distintos }$
+- $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovectores LI (vectores columna de A)}$
+- $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i)$
+- $ A\in K^{N\times N} \text { es diagonalizable } \iff A = PDP^{-1}, D \text{ diagonal }$
+- $ A\in K^{N\times N} \text { es diagonalizable } \iff A^m = PD^mP^{-1}$
+- $ A \text{ es diagonalizable si es semejante a una matriz diagonal}$
 
 ### 8.4. Multiplicidades
-- $$ mg_a(\lambda) = dim(E_\lambda)$$
-- $$ ma_a(\lambda) = \text{ "multiplicidad de lambda como raíz en } x(\lambda) \text{" }$$
-- $$1 \leq mg_a(\lambda) \leq ma_a(\lambda)$$
+- $ mg_a(\lambda) = dim(E_\lambda)$
+- $ ma_a(\lambda) = \text{ "multiplicidad de lambda como raíz en } x(\lambda) \text{" }$
+- $1 \leq mg_a(\lambda) \leq ma_a(\lambda)$
 
 ### 8.5. Matrices semejantes
 - $A, B \in K^{N\times N} \text{ son semejantes } \iff \exists c \in K^{N \times N} \text{ tal que } A = CBC^{-1}$ 
-- $$ \text{A y B son semejantes si } A= CBC^{-1}$$
-- $$P(x) = [ P ] x = \sum (x * e_i) * e_i, \text{ con } e_i \text{ los vectores columnas de la matriz ortogonal de P}$$
+- $ \text{A y B son semejantes si } A= CBC^{-1}$
+- $P(x) = [ P ] x = \sum (x * e_i) * e_i, \text{ con } e_i \text{ los vectores columnas de la matriz ortogonal de P} $

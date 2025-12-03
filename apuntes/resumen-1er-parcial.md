@@ -366,7 +366,7 @@ Podemos calcularla usando Gram-Schmidt o Householder.
 - $$A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base} $$
 
 ### 8.3. Diagonalizable
-- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovalores LI distintos }$$
+- $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovalores distintos }$$
 - $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovectores LI (vectores columna de A)}$$
 - $$ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i)$$
 - $$ A\in K^{N\times N} \text { es diagonalizable } \iff A = PDP^{-1}, D \text{ diagonal }$$

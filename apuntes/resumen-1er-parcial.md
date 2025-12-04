@@ -4,14 +4,16 @@
 
 1. [Preeliminar](#1-preeliminar)
     1. [Propiedades de la dimensión](#11-propiedades-de-la-dimensión)
-    2. [Linealmente independiente](#12-linealmente-independiente)
+    2. [Inversible (y vectores linealmente independientes)](#12-inversible-y-vectores-li-inealmente-independientes)
     3. [Propiedades matriciales](#13-propiedades-matriciales)
     4. [Subespacios](#14-subespacios)
     5. [Generadores y base](#15-generadores-y-base)
-    6. [Cambio de base](#16-cambio-de-base)
-    7. [Traza (propiedades)](#17-traza-propiedades)
-    8. [Determinante (propiedades)](#18-determinante-propiedades)
 2. [Transformaciones Lineales y Cambio de Base](#2-transformaciones-lineales-y-cambio-de-base)
+    1. [Definición y Propiedades Básicas](#21-definición-y-propiedades-básicas)
+    2. [Núcleo e Imagen](#22-núcleo-e-imagen)
+    3. [Representación Matricial de una T.L.](#23-representación-matricial-de-una-tl)
+    4. [Matriz de Cambio de Base (Vectores)](#24-matriz-de-cambio-de-base-vectores)
+    5. [Cambio de Base en Transformaciones Lineales](#25-cambio-de-base-en-transformaciones-lineales)
 3. [Proyecciones](#3-proyecciones)
     1. [Proyecciones en General](#31-proyecciones-en-general)
     2. [Proyección Ortogonal](#32-proyección-ortogonal)
@@ -23,27 +25,28 @@
         6. [Proyector Complementario](#326-proyector-complementario)
         7. [Relación de Subespacios](#327-relación-de-subespacios)
     3. [Ortonormalizar una matriz](#33-ortonormalizar-una-matriz)
+        1. [Proceso (Gram-Schmidt)](#331-proceso-gram-schmidt)
+        2. [Propiedades de matrices ortonormales](#332-propiedades-de-matrices-ortonormales)
 4. [Normas](#4-normas)
     1. [Normas vectoriales](#41-normas-vectoriales)
     2. [Normas matriciales](#42-normas-matriciales)
-    3. [Condición y propiedades](#43-condicion-y-propiedades)
+    3. [Condición y propiedades](#43-condición-y-propiedades)
 5. [Descomposición $A=LU$](#5-descomposición-alu)
     1. [Existencia](#51-existencia)
     2. [Algoritmo](#52-algoritmo)
-    3. [Descomposición $PA=LU$](#53-descomposición)
-6. [Descomposición Cholesky $A=\hat{L}\hat{L}^T$](#6-descomposición-cholesky-a-hatlhatlt)
+    3. [Descomposición $PA=LU$](#53-descomposición-palu)
+6. [Descomposición Cholesky $A=\hat{L}\hat{L}^T$](#6-descomposición-cholesky-ahatlhatlt)
     1. [Existencia](#61-existencia)
     2. [Algoritmo](#62-algoritmo)
 7. [Descomposición $A=QR$](#7-descomposición-aqr)
     1. [Existencia](#71-existencia)
-    2. [Algoritmo HouseHolder](#71-algoritmo-householder)
-    3. [Algoritmo GramSchmidt](#73-algoritmo-con-gram-schmidt)
+    2. [Algoritmo Householder](#72-algoritmo-householder)
+    3. [Algoritmo con Gram-Schmidt](#73-algoritmo-con-gram-schmidt)
 8. [Teoremas y propiedades](#8-teoremas-y-propiedades)
     1. [Definida positiva](#81-definida-positiva)
-    2. [Inversible](#82-inversible)
-    3. [Diagonalizable](#83-diagonalizable)
-    4. [Multiplicidades](#84-multiplicidades)
-    5. [Matrices semejantes](#85-matrices-semejantes)
+    2. [Diagonalizable](#83-diagonalizable)
+    3. [Multiplicidades](#84-multiplicidades)
+    4. [Matrices semejantes](#85-matrices-semejantes)
 
 ---
 
@@ -59,8 +62,24 @@
 
 - **Teorema**: $\mathbb{V}$ espacio de dim finita, $f: \mathbb{V} \rightarrow \text{W}$ una tl. Sup. $ker(f)$ tiene a $B$ como base y $B' = B \cup C$ una completación de una base de $\mathbb{V}$ con $C\cap B=\empty$, entonces $f(C)$ es una base de $\mathbb{W}$
 
-### 1.2. Linealmente independiente
-$\{ v_0, ..., v_i \}$ son vectores LI $\iff \text{el sistema homogeneo } [v_0 | ... | v_i]$ es compatible determinado.
+### 1.2. Inversible (y vectores LI inealmente independientes)
+
+**A singular**
+- $A \text { no es inversible } \\
+\iff \lambda=0 \text{ es autovalor} \\
+\iff det(A)=0 \\
+\iff dim(Nu(A)) > 0 \\
+\iff \text {Los vectores columna de A son LD}$
+
+**A inversible**
+- $A \text{ inversible} \\
+\iff det(A) \neq 0 \\
+\iff \text{Los vectores columna de A son LI} \\
+$
+
+**Caso particular**
+- $A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base}$
+- $A \text{ estrictamente diagonal dominante (la diafonal es mayor en mulo que el resto de valores) } \implies \text{ A invertible}$
 
 ### 1.3. Propiedades matriciales
 - Cualquier matriz $A\in\mathbb{K}^{n\times n}$ puede escribirse como $A=\sum_i \sum_j a_{ij} E_{ij}$, siendo $E_{ij}$ la matríz definida por 
@@ -76,11 +95,31 @@ Un subespacio debe cumplir que:
 - [3] $\forall k\in \mathbb{K}, s \in S, kS \in S$
 
 Más propiedades:
-- $S$ y $T$ con generadores $\{ s_0, ..., s_i \}$ y $\{ t_0, ..., t_j \}$ entonces $S+T= \langle s_0, ..., s_i, t_0, ..., t_j \rangle$
-- **Suma Directa:** $L+M$ es suma directa ($L \oplus M$) si y solo si $L \cap M = \{0\}$
-- **Union de subespacios:** $S \cup T = \{ w : w\in S \lor w\in T\}$. En general no es un subespacio.
-- $S^\perp = \{ v \mid \langle v, s \rangle = 0, \ \forall s \in S \}$ (subespacio ortogonal a $S$)
-- $S = \langle s_0, ..., s_i \rangle, S \subset T \iff \forall s_j \in T$ 
+- **Suma de subespacios:** Sean $S$ y $T$ subespacios con generadores $\{ s_0, ..., s_i \}$ y $\{ t_0, ..., t_j \}$. Entonces, la suma $S+T$ es el subespacio generado por la unión de sus generadores:
+  $$S+T = \langle s_0, ..., s_i, t_0, ..., t_j \rangle$$
+
+- **Intersección de subespacios:** Dados $S$ y $T$ generados por los conjuntos $\{ s_0, ..., s_i \}$ y $\{ t_0, ..., t_j \}$ respectivamente, la intersección $S \cap T$ es el conjunto de vectores que pueden escribirse tanto como combinación lineal de los generadores de $S$ como de los de $T$:
+  $$S \cap T = \{ v : v \in S \text{ y } v \in T \}$$
+  Para encontrar el conjunto, se resuelve el sistema $S\alpha = T\beta$ con variables libres $\alpha$ y $\beta$, es decir, se buscan los vectores que pueden escribirse en ambos sistemas de generadores simultáneamente. Alternativamente, $S\cap T$ es el subespacio generado por todos los vectores comunes a ambos subespacios.
+
+  **Forma matricial:** Si representamos las matrices $S$ (con columnas los generadores de $S$) y $T$ (con columnas los generadores de $T$), la intersección $S \cap T$ puede obtenerse encontrando todas las soluciones del sistema homogéneo $S\alpha - T\beta = 0$, es decir:
+  $$
+  \begin{pmatrix} S & -T \end{pmatrix} \begin{pmatrix} \alpha \\ \beta \end{pmatrix} = 0
+  $$
+  Luego, los vectores de la forma $S\alpha$ (o $T\beta$) que satisfacen esta ecuación constituyen la intersección $S \cap T$. Así, se puede obtener una base del subespacio intersección de manera algorítmica usando métodos matriciales.
+
+- **Suma Directa:** La suma $L+M$ es directa ($L \oplus M$) si, y sólo si, $L \cap M = \{0\}$.
+
+- **Unión de subespacios:** $S \cup T = \{ w : w \in S \lor w \in T \}$, aunque en general la unión de subespacios no es un subespacio salvo casos triviales.
+
+- **Subespacio contenido:** Si $S = \langle s_0, ..., s_i \rangle$, entonces $S \subset T$ si y sólo si $\forall s_j\, :\, s_j \in T$.
+
+- Se verifica que $A \cap B = \{0\}$ comprobando que no es posible expresar los generadores de un subespacio como combinaciones lineales de los generadores del otro.
+
+- **Subespacios ortogonales:** Dos subespacios $S$ y $T$ son ortogonales si todo generador de $S$ es perpendicular a todo generador de $T$ (y viceversa).
+
+- El subespacio ortogonal de $S$ se denota:
+  $$S^\perp = \{ v \mid \langle v, s \rangle = 0,\, \forall s \in S \}$$
 
 ### 1.5. Generadores y base
 - Para obtener una base a partir de generadores puedo poner los vectores en filas, triangular la matríz y ver que, las filas que se vuelven 0 podemos sacarlas, y si se vuelven CL sacar 1.
@@ -213,7 +252,13 @@ Una matriz $P$ se llama **Proyector** si, al aplicarse dos veces, el resultado e
 * **Autovalores:** Los autovalores de cualquier matriz de proyección $P$ solo pueden ser **0** o **1**.
 * **Relación Núcleo/Imagen (Clave):** Para cualquier proyector $P$:
     $$\operatorname{Im}(P) = \operatorname{Nu}(I - P)$$
+    $$\operatorname{Im}(I-P) = \operatorname{Nu}(- P) = \operatorname{Nu}(P)$$
     (Los vectores en la imagen son los que quedan fijos: $Px=x$).
+
+#### Armado de proyector en general:
+Supongamos tengo un subespacio $M = [v_1 | ... | v_n]$
+$$P M = R = [p(v_1) | ... | p(v_n)]$$
+$$P = RM^{-1}$$
 
 ***
 
@@ -236,6 +281,7 @@ Donde $P_S(x) \in S$ y $P_{S^\perp}(x) \in S^\perp$.
 La matriz $P_S$ es una matriz de proyección si y solo si cumple:
 * **Idempotencia:** $P_S^2 = P_S$
 * **Simetría:** $P_S^T = P_S$ (Esta es la condición extra que la hace *ortogonal*).
+* $Nu(P) \perp Im(P)$
 
 #### 3.2.4. Fórmulas de Construcción
 
@@ -243,7 +289,7 @@ Sea $S = \text{col}(A)$, donde las columnas de $A$ forman una base para $S$.
 
 | Caso | Matriz $A$ (Base de $S$) | Fórmula del Proyector $P_S$ |
 | :--- | :--- | :--- |
-| **Caso General** | Columnas de $A$ **L.I.** (no necesariamente ortonormales) | $$P_S = A(A^TA)^{-1}A^T$$ |
+| **Caso General** | Columnas de $A$ **L.I.** (no necesariamente ortonormales) | $$P_S = RS^{-1}$$ |
 | **Caso Especial** | Columnas de $Q$ **ortonormales** ($Q^TQ = I$) | $$P_S = Q Q^T$$ |
 
 **Nota Operativa:** En el examen de ALC, si $A$ no tiene columnas ortogonales, usualmente se le aplica **Gram-Schmidt** a las columnas de $A$ para obtener la matriz $Q$ de la base ortonormal, y así usar la fórmula simplificada $P_S = QQ^T$.
@@ -258,7 +304,7 @@ $$ P_S(x) = P_S x = \sum_{i=1}^r (\underbrace{v_i^T x}_{\text{proy. sobre } v_i}
 El proyector ortogonal sobre el complemento ortogonal $S^\perp$ se define como:
 $$P_{S^\perp} = I - P_S$$
 
-#### 3.2.7. Relación de Subespacios (Fundamental)
+#### 3.2.7. Relación de Subespacios (matriz de proyeccion ortonormal)
 * $\operatorname{Im}(P_S) = S$
 * $\operatorname{Nu}(P_S) = S^\perp$
 
@@ -285,7 +331,7 @@ Donde:
 #### 3.3.2. Propiedades de matrices ortonormales
 - $Q^TQ = I$
 - $Im(A) = Im(Q) \text{ pero la transformación lineal es distinta, es decir, generalmente } Ax \neq Qx$
-- $Q$ es más estable y tiene mejor numero de condicion.
+- $Q$ unitaria, $||Qx|| = ||x||$
 
 ## 4. Normas
 
@@ -328,25 +374,25 @@ $$
 - $||Ax|| \leq ||A|| \cdot ||x||$
 - $||AB|| \leq ||A|| \cdot ||B||$
 - $||A|| = \sup_{v \neq 0} \left\{ \frac{||Av||}{||v||} \right\}$
-- $Q$ unitaria, $||Qx|| = ||x||$
-- $e \in \ker(A^T) \iff e \perp \operatorname{col}(A)$
-
 ---
 
 ### 4.3. Condición y propiedades
 
-El **número de condición** de una matriz $A$ respecto a una norma vectorial es:
+El **número de condición $(k)$** de una matriz $A$ respecto a una norma vectorial es:
 
-- $$ cond_*(A) = ||A||_* \cdot ||A^{-1}||_* $$
+- $ k_*(A) = ||A||_* \cdot ||A^{-1}||_* $
 
 Propiedades importantes del número de condición:
+- $k_*(A) \geq \sup_{\substack{H \\ \text{singular}}} \left\{ \frac{||A||_* }{||A - H||_*} \right\}$
+- $k_*(A) \leq \inf_{\substack{H \\ \text{singular}}} \left\{ \frac{||A - H||_*}{||A||_*} \right\}$
 
-- $$cond_*(A) \geq \sup_{H \text{ singular}} \left\{ \frac{||A||_* } {||A - H||_*}\right\}$$
-- $$cond_*(A) \leq \inf_{H \text{ singular}} \left\{ \frac{||A-H||_* } {||A||_* }\right\}$$
-- $$\frac{||\tilde{x}-x||}{||x||} \leq cond_*(A) \cdot \frac{||\tilde{b}-b||}{||b||}$$
+**Observación**
+- $k \in [1, +\inf)$
+- Un número de condición grande implica que el sistema es mal condicionado y sensible a errores de redondeo.
 
-Un número de condición grande implica que el sistema es mal condicionado y sensible a errores de redondeo.
-
+#### Error relativo
+Se puede acotar el error relativo de computo de $x$ con:
+$$\frac{\lVert x - \tilde{x} \rVert}{\lVert x \rVert} \le \kappa(A) \frac{\lVert b - \tilde{b} \rVert}{\lVert b \rVert}$$
 ---
 
 ## 5. Descomposición $A=LU$
@@ -355,7 +401,13 @@ $$A = LU$$
 - $U$: triangular superior.
 
 ### 5.1 Existencia
-Para matrices cuadradas sii durante la eliminación gaussiana, todos los pivotes deben ser $\neq 0$ (sin intercambiar filas), esto sucede si $det(A) \neq 0$.
+Existe LU para matrices cuadradas 
+$\iff \text{durante la eliminación gaussiana, todos los pivotes deben ser distintos a cero (sin intercambiar filas)} \\
+\iff det(A) \neq 0
+$
+
+**Unicidad**
+La factorización es única si se piden unos en la diagonal de $L$ y todos sus menores principales son distintos a 0.
 
 ### 5.2 Algoritmo
 1. Triangular la matríz original con operaciones elementales entre filas hasta que quede triangular superior.
@@ -374,15 +426,17 @@ La **descomposición de Cholesky** $A = \hat{L}\hat{L}^T$ existe **si y sólo si
 
 Es decir, para cualquier matriz cuadrada real $A$ tal que $a_{ij} = a_{ji}$ y $x^T A x > 0$ para todo vector $x\neq 0$, se puede escribir $A$ como el producto de una triangular inferior $\hat{L}$ y su transpuesta.
   
+**Unicidad** 
 - La factorización es única cuando $A$ es definida positiva y simétrica.
 
 ### 6.2 Algoritmo
 1. Calculo $A=LU$
 2. Defino D de la siguiente forma:
-    $$ D_{ij} = \begin{cases}
+$$ D_{ij} = \begin{cases}
     L_{ii} & \text{si i=j} \\
     0 & \text{cc.}
-    \end{cases}$$
+\end{cases}
+$$
 3. Defino $D_1$ de tal forma que $D_1 * D_1 = D$, o sea:
     $(D_1)_{ii} = \sqrt{D_{ii}}$
 4. Defino $\hat{L} = L*D_1$
@@ -396,6 +450,9 @@ La descomposición $A=QR$ existe para cualquier matriz $A\in \mathbb{R}^{m \time
 - **Para matrices rectangulares ($m > n$):** $Q$ será $m \times m$ ortogonal/unitaria y $R$ será $m \times n$ (puede tener ceros al final).
 
 Podemos calcularla usando Gram-Schmidt o Householder.
+
+**Unicidad**
+- QR es única si y solo si A tiene columnas LI y $R_{ii} > 0$.
 
 ### 7.1 Algoritmo HouseHolder
 
@@ -434,30 +491,39 @@ Podemos calcularla usando Gram-Schmidt o Householder.
     Donde los elementos en la diagonal son $r_{kk} = \|\mathbf{v}_k\|$.
 
 ## 8. Teoremas y propiedades
-- $ A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$
+- $A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$
+- $A \text{ cuadrada } \implies \sum_{i=0}^n \lambda_i = \text{traza(A)}$
+- $A \text{ diagonal o triangular } \implies \text{ Los autovalores están en la diagonal}$
+- $\lambda \text{ autovalor de } A  \text{ (invertible) } \implies \\
+1/\lambda \text{ autovalor de } A^{-1} \text{ y } mg_A(\lambda) = mg_{A^{-1}}(1/\lambda) \text{ (solo porque son el mismo subespacio, la algebraica no se conserva)}$
+- $\lambda \text{ autovalor de A } \implies \lambda^k \text{ autovalor de }A^k$
+- $e \in \ker(A^T) \iff e \perp \operatorname{col}(A)$
 
 ### 8.1. Definida positiva
+- $A \text{ es definida positiva } \iff \text{Para todo vector no nulo } \mathbf{x} \in \mathbb{R}^n \text{, se cumple que la forma cuadrática } \mathbf{x}^T A \mathbf{x} > 0$.
+- $A \text{ es definida positiva } \iff \text{Todos los autovalores de } A \text{ son estrictamente positivos } (\lambda_i > 0)$.
 - $A \text{ es definida positiva } \iff A=LU \text{ con } U_{ii} > 0 \text{ para } \forall i \in \{1 .. n\}$
+- $A \text{ es definida positiva } \iff \text{Todos los menores principales de } A \text{ (determinantes de submatrices } k \times k \text{ superiores izquierdas) son estrictamente positivos } (\det(A_k) > 0 \text{ para } k=1, \dots, n)$.
+- $A \text{ es definida positiva } \iff A \text{ admite la Factorización de Cholesky } A = L L^T \text{, donde } L \text{ es triangular inferior con } L_{ii} > 0 \text{ para } \forall i$.
+- $A \text{ es definida positiva } \iff \text{Existe una matriz } B \text{ de rango } n \text{ tal que } A = B^T B$.
 
-### 8.2. Inversible
-- $A \text{ inversible} \iff det(A) = 0 \iff \exists v \neq 0 | Av = 0$
-- $ A \text { no es inversible } \iff \lambda=0 \text{ es autovalor}$
-- $A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base}$
+### 8.3 Semidefinida positiva
+- $A \text{ es semidefinida positiva } \iff \lambda_i \geq 0 \text{ (autovalores de A)}$
 
 ### 8.3. Diagonalizable
-- $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovalores distintos }$
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovectores LI (vectores columna de A)}$
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i)$
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff A = PDP^{-1}, D \text{ diagonal }$
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff A^m = PD^mP^{-1}$
 - $ A \text{ es diagonalizable si es semejante a una matriz diagonal}$
+- $ A \text{ con autovalores distintos} \implies \text{ A diagonalizable}$
 
 ### 8.4. Multiplicidades
 - $ mg_a(\lambda) = dim(E_\lambda)$
-- $ ma_a(\lambda) = \text{ "multiplicidad de lambda como raíz en } x(\lambda) \text{" }$
+- $ ma_a(\lambda) = $ multiplicidad de lambda en el polinomio característico (cuántas veces aparece como autovalor).
 - $1 \leq mg_a(\lambda) \leq ma_a(\lambda)$
+- $A \in \mathbb{K}^{N \times N} \implies \sum_{i} ma(\lambda_i) = N$
 
 ### 8.5. Matrices semejantes
 - $A, B \in K^{N\times N} \text{ son semejantes } \iff \exists c \in K^{N \times N} \text{ tal que } A = CBC^{-1}$ 
 - $ \text{A y B son semejantes si } A= CBC^{-1}$
-- $P(x) = [ P ] x = \sum (x * e_i) * e_i, \text{ con } e_i \text{ los vectores columnas de la matriz ortogonal de P} $

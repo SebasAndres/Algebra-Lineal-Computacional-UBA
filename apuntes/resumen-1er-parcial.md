@@ -181,7 +181,7 @@ $$[f]_{BB'} = \begin{pmatrix} | & & | \\ [f(v_1)]_{B'} & \cdots & [f(v_n)]_{B'} 
 
 Para transformar un vector $v$, multiplicamos sus coordenadas por la matriz:
 
-$$[f(v)]_{B'} = [f]_{BB'} \cdot [v]_B$$
+$$[f(v)]_{BB'} = [f]_{BB'} \cdot [v]_B$$
 
 ---
 
@@ -205,40 +205,15 @@ $$[v]_{B'} = C_{BB'} \cdot [v]_B$$
 
 4.  **Composición:** $C_{BB''} = C_{B'B''} \cdot C_{BB'}$.
 
-> **Nota práctica:** Es fácil construir la matriz de cambio de base $C_{BE}$ (de una base $B$ cualquiera a la canónica $E$), simplemente poniendo los vectores de $B$ como columnas. Para volver (de canónica a $B$), calculamos la inversa: $C_{EB} = (C_{BE})^{-1}$.
+> **Nota práctica:** Es fácil construir la matriz de cambio de base $C_{BE}$ (de una base $B$ cualquiera a la canónica $E$), simplemente poniendo los vectores de $B$ como columnas. Para volver (de canónica a $B$), calculamos la inversa: $C_{EB} = (C_{BE})^{-1}$. Si $B$ es ortonogonal, $ C_{EB} = C_{BE}^{-1} = C_{BE}^T$. 
 
 ---
 
 ### 2.5. Cambio de Base en Transformaciones Lineales
 
-¿Cómo cambia la matriz de una T.L. si cambiamos las bases del espacio?
+$$[f]_{BE} = [f]_{EE} C_{BE}$$
 
-Sea $f: \mathbb{V} \rightarrow \mathbb{V}$ un endomorfismo (T.L. de un espacio en sí mismo).
-
-* Sea $A = [f]_{BB}$ la matriz de $f$ en base $B$.
-
-* Sea $A' = [f]_{B'B'}$ la matriz de $f$ en base $B'$.
-
-* Sea $P = C_{B'B}$ la matriz de cambio de base de $B'$ a $B$.
-
-La relación entre ambas matrices está dada por la ecuación de semejanza:
-
-$$A' = P^{-1} A P$$
-
-O escrito con la notación de coordenadas:
-
-$$[f]_{B'B'} = C_{BB'} [f]_{BB} C_{B'B}$$
-
-#### Interpretación del Diagrama Conmutativo:
-
-Para aplicar $f$ en la base $B'$ usando la matriz en base $B$:
-
-1.  Transformamos de $B'$ a $B$ ($C_{B'B}$).
-
-2.  Aplicamos la transformación en $B$ ($[f]_{BB}$).
-
-3.  Volvemos de $B$ a $B'$ ($C_{BB'}$).
-
+- Donde $f_{EE}$ está definida por las ecuaciones dadas de $f(X)=(\phi_1(X), ..., \phi_n(X))$
 > **Conclusión Clave:** Dos matrices representan la misma transformación lineal en distintas bases si y solo si son **semejantes**. Esto implica que comparten propiedades intrínsecas como el determinante, la traza y los autovalores.
 
 ## 3. Proyecciones
@@ -292,7 +267,7 @@ Sea $S = \text{col}(A)$, donde las columnas de $A$ forman una base para $S$.
 | **Caso General** | Columnas de $A$ **L.I.** (no necesariamente ortonormales) | $$P_S = RS^{-1}$$ |
 | **Caso Especial** | Columnas de $Q$ **ortonormales** ($Q^TQ = I$) | $$P_S = Q Q^T$$ |
 
-**Nota Operativa:** En el examen de ALC, si $A$ no tiene columnas ortogonales, usualmente se le aplica **Gram-Schmidt** a las columnas de $A$ para obtener la matriz $Q$ de la base ortonormal, y así usar la fórmula simplificada $P_S = QQ^T$.
+**Nota Operativa:** Si $A$ no tiene columnas ortogonales, usualmente se le aplica **Gram-Schmidt** a las columnas de $A$ para obtener la matriz $Q$ de la base ortonormal, y así usar la fórmula simplificada $P_S = QQ^T$.
 
 #### 3.2.5. Proyector a partir de una BON
 Si tienes una **Base Ortonormal (B.O.N.)** de $S$ dada por $\{v_1, ..., v_r\}$, el proyector ortogonal sobre $S$ es la suma de proyectores de rango uno:
@@ -329,8 +304,7 @@ Donde:
 -  $p_a(b) = \frac{a^Tb}{a^Ta}a$
 
 #### 3.3.2. Propiedades de matrices ortonormales
-- $Q^TQ = I$
-- $Im(A) = Im(Q) \text{ pero la transformación lineal es distinta, es decir, generalmente } Ax \neq Qx$
+- $Q^T = Q^{-1}$
 - $Q$ unitaria, $||Qx|| = ||x||$
 
 ## 4. Normas
@@ -403,11 +377,10 @@ $$A = LU$$
 ### 5.1 Existencia
 Existe LU para matrices cuadradas 
 $\iff \text{durante la eliminación gaussiana, todos los pivotes deben ser distintos a cero (sin intercambiar filas)} \\
-\iff det(A) \neq 0
-$
+\iff det(A_k) \neq 0 \text{para Ak submatriz principal hasta n-1 (todos sus menores principales son distintos a 0)}$
 
 **Unicidad**
-La factorización es única si se piden unos en la diagonal de $L$ y todos sus menores principales son distintos a 0.
+La factorización es única si A es invertible.
 
 ### 5.2 Algoritmo
 1. Triangular la matríz original con operaciones elementales entre filas hasta que quede triangular superior.
@@ -427,7 +400,7 @@ La **descomposición de Cholesky** $A = \hat{L}\hat{L}^T$ existe **si y sólo si
 Es decir, para cualquier matriz cuadrada real $A$ tal que $a_{ij} = a_{ji}$ y $x^T A x > 0$ para todo vector $x\neq 0$, se puede escribir $A$ como el producto de una triangular inferior $\hat{L}$ y su transpuesta.
   
 **Unicidad** 
-- La factorización es única cuando $A$ es definida positiva y simétrica.
+La factorización es única cuando $A$ es definida positiva y simétrica.
 
 ### 6.2 Algoritmo
 1. Calculo $A=LU$
@@ -451,8 +424,11 @@ La descomposición $A=QR$ existe para cualquier matriz $A\in \mathbb{R}^{m \time
 
 Podemos calcularla usando Gram-Schmidt o Householder.
 
-**Unicidad**
-- QR es única si y solo si A tiene columnas LI y $R_{ii} > 0$.
+**Propiedad**
+$Im(A) = Im(Q) \text{ pero la transformación lineal es distinta, es decir, generalmente } Ax \neq Qx$
+
+**Unicidad** 
+QR es única si y solo si A tiene columnas LI o tambien $R_{ii} > 0$.
 
 ### 7.1 Algoritmo HouseHolder
 
@@ -498,6 +474,7 @@ Podemos calcularla usando Gram-Schmidt o Householder.
 1/\lambda \text{ autovalor de } A^{-1} \text{ y } mg_A(\lambda) = mg_{A^{-1}}(1/\lambda) \text{ (solo porque son el mismo subespacio, la algebraica no se conserva)}$
 - $\lambda \text{ autovalor de A } \implies \lambda^k \text{ autovalor de }A^k$
 - $e \in \ker(A^T) \iff e \perp \operatorname{col}(A)$
+- $D \text{ matriz diagonal } \implies ||D||_2 = max_{\substack{\lambda}} \{ |\lambda| : \lambda \text{ autovalor de D} \}=max{|D_{ii}|}$
 
 ### 8.1. Definida positiva
 - $A \text{ es definida positiva } \iff \text{Para todo vector no nulo } \mathbf{x} \in \mathbb{R}^n \text{, se cumple que la forma cuadrática } \mathbf{x}^T A \mathbf{x} > 0$.

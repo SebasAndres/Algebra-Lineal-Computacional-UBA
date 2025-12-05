@@ -377,7 +377,7 @@ $$A = LU$$
 ### 5.1 Existencia
 Existe LU para matrices cuadradas 
 $\iff \text{durante la eliminación gaussiana, todos los pivotes deben ser distintos a cero (sin intercambiar filas)} \\
-\iff det(A_k) \neq 0 \text{para Ak submatriz principal hasta n-1 (todos sus menores principales son distintos a 0)}$
+\iff det(A_k) \neq 0 \text{ para Ak submatriz principal hasta n-1 (todos sus menores principales son distintos a 0)}$
 
 **Unicidad**
 La factorización es única si A es invertible.
@@ -481,8 +481,6 @@ QR es única si y solo si A tiene columnas LI o tambien $R_{ii} > 0$.
 - $A \text{ es definida positiva } \iff \text{Todos los autovalores de } A \text{ son estrictamente positivos } (\lambda_i > 0)$.
 - $A \text{ es definida positiva } \iff A=LU \text{ con } U_{ii} > 0 \text{ para } \forall i \in \{1 .. n\}$
 - $A \text{ es definida positiva } \iff \text{Todos los menores principales de } A \text{ (determinantes de submatrices } k \times k \text{ superiores izquierdas) son estrictamente positivos } (\det(A_k) > 0 \text{ para } k=1, \dots, n)$.
-- $A \text{ es definida positiva } \iff A \text{ admite la Factorización de Cholesky } A = L L^T \text{, donde } L \text{ es triangular inferior con } L_{ii} > 0 \text{ para } \forall i$.
-- $A \text{ es definida positiva } \iff \text{Existe una matriz } B \text{ de rango } n \text{ tal que } A = B^T B$.
 
 ### 8.3 Semidefinida positiva
 - $A \text{ es semidefinida positiva } \iff \lambda_i \geq 0 \text{ (autovalores de A)}$

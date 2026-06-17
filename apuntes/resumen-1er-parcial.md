@@ -56,8 +56,7 @@
 
 - **Teorema de la dimensión**: $\dim(\operatorname{Im}(A)) + \dim(\ker(A)) = n$, donde $n$ es el número de columnas de $A$.
 - $dim(A+B) = dim(A) + dim(B) - dim(A\cap B)$.
-- $rk(A) = dim(Im(A)) = $"cantidad de ecuaciones li del sistema".
-- $dim(ker(A)) = n - rk(A)$.
+- $rk(A) = dim(Im(A))$
 - $ker(A) = \{ x: Ax = 0 \}$.
 
 - **Teorema**: $\mathbb{V}$ espacio de dim finita, $f: \mathbb{V} \rightarrow \text{W}$ una tl. Sup. $ker(f)$ tiene a $B$ como base y $B' = B \cup C$ una completación de una base de $\mathbb{V}$ con $C\cap B=\empty$, entonces $f(C)$ es una base de $\mathbb{W}$
@@ -65,21 +64,16 @@
 ### 1.2. Inversible (y vectores LI inealmente independientes)
 
 **A singular**
-- $A \text { no es inversible } \\
-\iff \lambda=0 \text{ es autovalor} \\
-\iff det(A)=0 \\
-\iff dim(Nu(A)) > 0 \\
-\iff \text {Los vectores columna de A son LD}$
+
+$A \text { no es inversible }  \iff \lambda=0 \text{ es autovalor} \iff det(A)=0 \iff dim(Nu(A)) > 0 \iff \text {Los vectores columna/fila de A son LD}$
 
 **A inversible**
-- $A \text{ inversible} \\
-\iff det(A) \neq 0 \\
-\iff \text{Los vectores columna de A son LI} \\
-$
 
-**Caso particular**
+$A \text{ inversible}  \iff det(A) \neq 0 \iff \text{Los vectores columna/fila de A son LI}$
+
+**Casos particulares**
 - $A\in K^{N\times N} \text{ invertible } \iff \text{Los vectores columna de A forman una base}$
-- $A \text{ estrictamente diagonal dominante (la diafonal es mayor en mulo que el resto de valores) } \implies \text{ A invertible}$
+- $A \text{ estrictamente diagonal dominante (la diafonal es mayor en modulo que el resto de valores) } \implies \text{ A invertible}$
 
 ### 1.3. Propiedades matriciales
 - Cualquier matriz $A\in\mathbb{K}^{n\times n}$ puede escribirse como $A=\sum_i \sum_j a_{ij} E_{ij}$, siendo $E_{ij}$ la matríz definida por 
@@ -88,9 +82,15 @@ $$E_{ij} = \begin{cases}
     0 & \text{cc.}
 \end{cases}$$
 
+- $A = \begin{pmatrix} | & | & | \\ C_1 & C_2 & C_3 \\ | & | & | \end{pmatrix}, \quad x = \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}$, entonces $Ax$ se define como: $Ax = x_1 C_1 + x_2 C_2 + x_3 C_3$
+
+- Si tienes $\langle \alpha u, \beta v \rangle$, esto es igual a $\alpha \cdot \beta \cdot \langle u, v \rangle$.
+- A normal ($A^tA = AA^t$) $\iff$ existe una b.o.n de autovectores de A.
+- A simétrica real $\rightarrow$ A normal
+
 ### 1.4. Subespacios
 Un subespacio debe cumplir que:
-- [1] $0 \in S$
+- [x] $0 \in S$
 - [2] $v\in S, w\in S \implies v+w \in S$
 - [3] $\forall k\in \mathbb{K}, s \in S, kS \in S$
 
@@ -108,7 +108,7 @@ Más propiedades:
   $$
   Luego, los vectores de la forma $S\alpha$ (o $T\beta$) que satisfacen esta ecuación constituyen la intersección $S \cap T$. Así, se puede obtener una base del subespacio intersección de manera algorítmica usando métodos matriciales.
 
-- **Suma Directa:** La suma $L+M$ es directa ($L \oplus M$) si, y sólo si, $L \cap M = \{0\}$.
+- **Suma Directa:** La suma $L+M$ es directa ($L \oplus M$) $\iff$ $L \cap M = \{0\} \land L + M = \mathbb{K}^n$.
 
 - **Unión de subespacios:** $S \cup T = \{ w : w \in S \lor w \in T \}$, aunque en general la unión de subespacios no es un subespacio salvo casos triviales.
 
@@ -218,8 +218,6 @@ $$[f]_{BE} = [f]_{EE} C_{BE}$$
 
 ## 3. Proyecciones
 
-Este es el resumen completo de propiedades y teoremas clave sobre proyecciones que necesitas para el examen, completando y formalizando la sección que proporcionaste:
-
 ### 3.1. Proyecciones en General
 Una matriz $P$ se llama **Proyector** si, al aplicarse dos veces, el resultado es el mismo que aplicarse una sola vez.
 
@@ -229,13 +227,15 @@ Una matriz $P$ se llama **Proyector** si, al aplicarse dos veces, el resultado e
     $$\operatorname{Im}(P) = \operatorname{Nu}(I - P)$$
     $$\operatorname{Im}(I-P) = \operatorname{Nu}(- P) = \operatorname{Nu}(P)$$
     (Los vectores en la imagen son los que quedan fijos: $Px=x$).
+- En todo proyector se cumple la suma directa $V = Im(f) \oplus Nu(f)$
+
+- Para que exista un proyector $p$ para $f(x)=Ax$ con imagen ($im(f)=im(p)$) y núcleo ($nu(p)=nu(f)$), la suma de ambos subespacios debe ser directa y generar todo $\mathbb{R}^4$, es decir, $Im(f) \oplus Nu(f) = \mathbb{R}^4$.
+
 
 #### Armado de proyector en general:
 Supongamos tengo un subespacio $M = [v_1 | ... | v_n]$
 $$P M = R = [p(v_1) | ... | p(v_n)]$$
 $$P = RM^{-1}$$
-
-***
 
 ### 3.2. Proyección Ortogonal
 
@@ -358,7 +358,12 @@ El **número de condición $(k)$** de una matriz $A$ respecto a una norma vector
 
 Propiedades importantes del número de condición:
 - $k_*(A) \geq \sup_{\substack{H \\ \text{singular}}} \left\{ \frac{||A||_* }{||A - H||_*} \right\}$
-- $k_*(A) \leq \inf_{\substack{H \\ \text{singular}}} \left\{ \frac{||A - H||_*}{||A||_*} \right\}$
+- $\frac{1}{k_*(A)} \leq \inf_{\substack{H \\ \text{singular}}} \left\{ \frac{||A - H||_*}{||A||_*} \right\}$
+
+Relaciones entre normas:
+- $\frac{1}{\sqrt{n}}||A||_\infty < ||A||_2 < \sqrt{n} ||A||_\infty$ 
+- $\frac{1}{\sqrt{n}}||A||_2 < ||A||_1 < \sqrt{n} ||A||_2$ 
+- $||A||_\infty < ||A||_1 < n ||A||_\infty$ 
 
 **Observación**
 - $k \in [1, +\inf)$
@@ -378,6 +383,13 @@ $$A = LU$$
 Existe LU para matrices cuadradas 
 $\iff \text{durante la eliminación gaussiana, todos los pivotes deben ser distintos a cero (sin intercambiar filas)} \\
 \iff det(A_k) \neq 0 \text{ para Ak submatriz principal hasta n-1 (todos sus menores principales son distintos a 0)}$
+
+**Menores principales (top-left):** $A_k$ es la submatriz formada por las primeras $k$ filas y $k$ columnas:
+$$A_1 = [a_{11}], \quad A_2 = \begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix}, \quad \dots$$
+
+- Se necesita $det(A_k) \neq 0$ solo para $k = 1, \dots, n-1$ (no para $k=n$, eso es la invertibilidad de $A$).
+- Un cero en $a_{11}$ implica $det(A_1) = 0$ → LU no existe (sin importar el resto).
+- Un cero en otra posición de la diagonal **no implica directamente** que algún menor sea cero.
 
 **Unicidad**
 La factorización es única si A es invertible.
@@ -406,7 +418,7 @@ La factorización es única cuando $A$ es definida positiva y simétrica.
 1. Calculo $A=LU$
 2. Defino D de la siguiente forma:
 $$ D_{ij} = \begin{cases}
-    L_{ii} & \text{si i=j} \\
+    U_{ii} & \text{si i=j} \\
     0 & \text{cc.}
 \end{cases}
 $$
@@ -467,7 +479,7 @@ QR es única si y solo si A tiene columnas LI o tambien $R_{ii} > 0$.
     Donde los elementos en la diagonal son $r_{kk} = \|\mathbf{v}_k\|$.
 
 ## 8. Teoremas y propiedades
-- $A \text{ simetrica} \rightarrow det(A) = \prod_i \lambda_i$
+- $A \text{ cuadrada } \rightarrow det(A) = \prod_i \lambda_i$
 - $A \text{ cuadrada } \implies \sum_{i=0}^n \lambda_i = \text{traza(A)}$
 - $A \text{ diagonal o triangular } \implies \text{ Los autovalores están en la diagonal}$
 - $\lambda \text{ autovalor de } A  \text{ (invertible) } \implies \\
@@ -482,6 +494,10 @@ QR es única si y solo si A tiene columnas LI o tambien $R_{ii} > 0$.
 - $A \text{ es definida positiva } \iff A=LU \text{ con } U_{ii} > 0 \text{ para } \forall i \in \{1 .. n\}$
 - $A \text{ es definida positiva } \iff \text{Todos los menores principales de } A \text{ (determinantes de submatrices } k \times k \text{ superiores izquierdas) son estrictamente positivos } (\det(A_k) > 0 \text{ para } k=1, \dots, n)$.
 
+**Ojo:** entradas positivas ≠ definida positiva. Contraejemplo: $\begin{bmatrix}1&2\\2&1\end{bmatrix}$ tiene todas entradas positivas pero $det = -3 < 0$ → autovalor negativo → no def. positiva → no tiene Cholesky.
+
+Cadena útil: $\exists \det(A_k) \leq 0 \iff \exists \lambda_i \leq 0 \iff A \text{ no es def. positiva} \iff A \text{ no tiene Cholesky}$
+
 ### 8.3 Semidefinida positiva
 - $A \text{ es semidefinida positiva } \iff \lambda_i \geq 0 \text{ (autovalores de A)}$
 
@@ -492,9 +508,17 @@ QR es única si y solo si A tiene columnas LI o tambien $R_{ii} > 0$.
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff A^m = PD^mP^{-1}$
 - $ A \text{ es diagonalizable si es semejante a una matriz diagonal}$
 - $ A \text{ con autovalores distintos} \implies \text{ A diagonalizable}$
+- Toda matriz simétrica con coeficientes reales es diagonalizable (de hecho, es diagonalizable ortogonalmente).
+
+**Diagonalizable sobre $\mathbb{R}$ (condición más estricta):**
+$A \in \mathbb{R}^{N\times N}$ es diagonalizable sobre $\mathbb{R}$ $\iff$
+1. Todos los autovalores son reales (el polinomio característico factoriza completamente en $\mathbb{R}$), **Y**
+2. $mg(\lambda_i) = ma(\lambda_i)$ para todo $\lambda_i$.
+
+Si hay autovalores complejos → automáticamente **no** diagonalizable sobre $\mathbb{R}$ (los autovectores asociados son complejos).
 
 ### 8.4. Multiplicidades
-- $ mg_a(\lambda) = dim(E_\lambda)$
+- $ mg_a(\lambda) = dim(E_\lambda) = dim(Nu(A - \lambda I))$ — se calcula triangulando $A - \lambda I$ y midiendo la dimensión del núcleo.
 - $ ma_a(\lambda) = $ multiplicidad de lambda en el polinomio característico (cuántas veces aparece como autovalor).
 - $1 \leq mg_a(\lambda) \leq ma_a(\lambda)$
 - $A \in \mathbb{K}^{N \times N} \implies \sum_{i} ma(\lambda_i) = N$

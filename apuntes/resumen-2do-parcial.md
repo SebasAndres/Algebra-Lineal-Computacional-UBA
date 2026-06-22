@@ -176,7 +176,7 @@ Una matriz de transición $A$ cumple las siguientes propiedades:
 Un vector $v$ se dice estado de equilibrio si $Av=v$. Es un autovector asociado para $\lambda=1$. Toda matriz de Markov tiene estado de equilibrio: $Av^* = v^*$
 
 #### 5.4 Convergencia de estado límite/equilibrio
-El método ($v^{(k+1)}=Av^{(k)}$) converge para cualquier $v^{(0)} \iff \\ \exists ! \lambda_i : \text{ autovalor de A tal que } (\lambda_i = 1 \land (\forall \lambda_j: \text{ autovalor de A: } \lambda_j \neq \lambda_i \rightarrow |\lambda_j|<1)) \\ \iff \exists A^{\inf} \\ \iff \text{La cadena de Markov asociada es irreducible}$ 
+El método ($v^{(k+1)}=Av^{(k)}$) converge para cualquier $v^{(0)} \iff \\ \exists ! \lambda_i : \text{ autovalor de A tal que } (\lambda_i = 1 \land (\forall \lambda_j: \text{ autovalor de A: } \lambda_j \neq \lambda_i \rightarrow |\lambda_j|<1)) \\ \iff \exists A^{\infty} \\ \iff \text{La cadena de Markov asociada es irreducible}$ 
  
 
 ##### 5.5 Cadenas reducibles o irreducibles
@@ -198,7 +198,7 @@ $$x=(A^tA)^{-1}A^tb$$
 
 Props:
 - Si existen soluciones para $Ax=b \rightarrow z=A^tb$ es solucion. Si hay infinitas soluciones, $z=A^tb$ es la solucion de norma 2 mínima.
-- $Ax=b$ tiene solucion $\iff AA^tb = b$
+- $Ax=b$ tiene solucion $\iff AA^tb = b \iff b\in Col(A)$
 - Las ecuaciones normales no están bien condicionadas por eso las soluciones usan QR o SVD ($\text{cond}(A^tA) = \text{cond}_2(A)²$ y $\text{cond}_2(A) = \frac{\sigma_1}{\sigma_n}$).
 - $A \text{ tiene columnas LI} \iff \text{ Cuadrados mínimos tiene única solución}$.
 
@@ -377,9 +377,9 @@ El radio espectral $\rho(T)$ de la matriz de iteración $T$ determina si un mét
 
 ### 7.7 Más propiedades
 
-- $A$ es hermitana $\iff$ $A=A^*$. 
+- $A$ es hermitiana $\iff$ $A=A^*$. 
 
-- Las matrices hermitianas tienen autovalores reales y son diagonalizables ortogonalmente con $A=UDU*$
+- Las matrices hermitianas tienen autovalores reales y son diagonalizables ortogonalmente con $A=UDU^*$
 
 - Las matrices hermitanas son un subconjunto de las normales.
 

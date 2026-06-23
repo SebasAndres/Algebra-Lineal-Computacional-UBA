@@ -464,6 +464,39 @@ QR es única si y solo si A tiene columnas LI o tambien $R_{ii} > 0$.
 6. Defino $Q = H_r * ... * H_2 * H_1$
 7. Luego $A = H_r * ... * H_2 * H_1 * R = QR$
 
+#### 7.2 Costo computacional: por qué Householder es eficiente
+
+**Regla general de costos:** multiplicar $(p\times q)\cdot(q\times r)$ cuesta $O(p \cdot q \cdot r)$.
+
+**Algoritmo naive (armando $H_k$ explícitamente, $A\in\mathbb{R}^{n\times n}$):**
+```
+Para k = 1, ..., n-1:
+    v_k = A[k:n, k]                                    — O(n-k)
+    w_k = (‖v_k‖, 0, ..., 0)ᵗ                           — O(n-k)
+    u_k = (v_k - w_k) / ‖v_k - w_k‖                     — O(n-k)
+    H_k = I - 2 u_k u_kᵗ          (matriz n×n completa) — O(n²)
+    A = H_k · A                  (matriz-matriz n×n)    — O(n³)
+    Q = Q · H_kᵗ                 (matriz-matriz n×n)    — O(n³)
+
+Costo total: n pasos × O(n³) = O(n⁴)
+```
+
+**Algoritmo Householder real (actualización de rango 1, sin armar $H_k$):**
+```
+Para k = 1, ..., n-1:
+    v_k = A[k:n, k:n][:, 1]                                       — O(n-k)
+    w_k = (‖v_k‖, 0, ..., 0)ᵗ                                     — O(n-k)
+    u_k = (v_k - w_k) / ‖v_k - w_k‖                                — O(n-k)
+    A[k:n,k:n] -= 2 u_k (u_kᵗ A[k:n,k:n])      (sin armar H_k)     — O((n-k)²)
+    Q -= 2 (Q u_k) u_kᵗ                        (sin armar H_k)     — O(n²)
+
+Costo total: O(n³/3) [triangular] + O(n³) [acumular Q] = O(n³)
+```
+
+**Comentarios:** la diferencia entre los dos algoritmos es la ganancia computacional real de Householder. Si en cada paso se arma $H_k$ y se multiplica como matriz-matriz genérica ($H_k\cdot A$ y $Q\cdot H_k^T$), el costo por paso es $O(n^3)$ y con $n$ pasos el total sube a $O(n^4)$.
+
+La versión real nunca arma $H_k$ ni hace ese producto matriz-matriz genérico — usa la identidad de rango 1 ($A - 2u(u^TA)$ y $Q - 2(Qu)u^T$), que cuesta $O(n^2)$ por paso en vez de $O(n^3)$. Sumando los $n$ pasos, el total queda en $O(n^3)$ — **$O(n^3)$ en vez de $O(n^4)$**, un factor de $n$ menos, igual orden que LU.
+
 ### 7.3 Algoritmo con Gram-Schmidt
 1. Calculo una b.o.n. a partir de $A$ y obtengo $Q$ unitaria de la forma:
     $$Q=[ q_1 | ... | q_n]$$
@@ -503,6 +536,7 @@ Cadena útil: $\exists \det(A_k) \leq 0 \iff \exists \lambda_i \leq 0 \iff A \te
 
 ### 8.3. Diagonalizable
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Existen N autovectores LI (vectores columna de A)}$
+  - Equivalente a decir que los autovectores forman una base de $\mathbb{K}^N$: N vectores LI en un espacio de dimensión N siempre constituyen una base. No es una propiedad nueva, es la misma reformulada.
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff \text{ Para todo } \lambda_i \text{ autovalor de A, vale que } mg_A(\lambda_i) = ma_A(\lambda_i)$
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff A = PDP^{-1}, D \text{ diagonal }$
 - $ A\in K^{N\times N} \text { es diagonalizable } \iff A^m = PD^mP^{-1}$

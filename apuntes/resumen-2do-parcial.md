@@ -152,6 +152,10 @@ Sea también $r = rk(A) = \# \{ \sigma_i \in \mathbb{K}_{\neq 0}: \text{ valores
 - $Nu(A) = < v_{r+1}, ..., v_{n} >$
 - $Nu(A^t) = < u_{r+1}, ..., u_{m} > = Nu(A^tA)$
 
+**Teorema de Eckart-Young:** La mejor aproximación de rango $k$ a $A$ en norma 2 (y Frobenius) es:
+$$B_k = \sum_{i=1}^{k} \sigma_i u_i v_i^t$$
+Y el error es $\|A - B_k\|_2 = \sigma_{k+1}$.
+
 | Tipo de Matriz | Condición de Forma Cuadrática | Condición de Autovalores ($\lambda_i$) | Consecuencia en $\text{det}(A)$ |
 | :--- | :--- | :--- | :--- |
 | **Definida Positiva (DP)** | $\boldsymbol{x}^* \boldsymbol{A} \boldsymbol{x} > 0$ para todo $\boldsymbol{x} \ne \boldsymbol{0}$ | **Todos $\boldsymbol{\lambda_i > 0}$** | $\text{det}(\boldsymbol{A}) > 0$ |
@@ -166,25 +170,34 @@ $v^{(k+1)} = Av^{(k)}$
 #### 5.2 Matríz de transición
 Una matriz de transición $A$ cumple las siguientes propiedades:
 - $A_{ij} \geq 0$
-- $\sum_i A_ij = 1$, $\forall j$
+- $\sum_i A_{ij} = 1$, $\forall j$ (columnas suman 1)
 - 1 es autovalor de $A$.
-- Si $\lambda$ es autovalor entonces $|\lambda| < 1$.
-- $mg(\lambda) = ma(\lambda)$
+- Si $\lambda$ es autovalor entonces $|\lambda| \leq 1$ (no estrictamente menor: pueden existir autovalores de módulo 1 distintos de 1, e.g. en cadenas con ciclos).
 - No toda matríz de Markov es diagonalizable, pero si lo es $A = PDP^{-1} \rightarrow v^{(k+1)} = A^k v^{(0)} = PD^{k}P^{-1}v^{(0)}$
 
 #### 5.3 Existencia de estado límite/equilibrio
 Un vector $v$ se dice estado de equilibrio si $Av=v$. Es un autovector asociado para $\lambda=1$. Toda matriz de Markov tiene estado de equilibrio: $Av^* = v^*$
 
-#### 5.4 Convergencia de estado límite/equilibrio
-El método ($v^{(k+1)}=Av^{(k)}$) converge para cualquier $v^{(0)} \iff \\ \exists ! \lambda_i : \text{ autovalor de A tal que } (\lambda_i = 1 \land (\forall \lambda_j: \text{ autovalor de A: } \lambda_j \neq \lambda_i \rightarrow |\lambda_j|<1)) \\ \iff \exists A^{\infty} \\ \iff \text{La cadena de Markov asociada es irreducible}$ 
- 
+#### 5.4 Unicidad y convergencia del estado de equilibrio
+
+**Unicidad:** El estado de equilibrio es único $\iff dim(E_A(\lambda=1)) = 1$.
+
+**Convergencia desde cualquier $v^{(0)}$:** El método converge para **cualquier** $v^{(0)} \iff \lambda=1$ es el único autovalor de módulo 1:
+$$\iff \forall \lambda_j \text{ autovalor de A}: \lambda_j = 1 \lor |\lambda_j| < 1$$
+$$\iff \exists A^{\infty}$$
+
+Si esto no se cumple (existen autovalores de módulo 1 distintos de 1), la convergencia **depende de $v^{(0)}$**:
+- Si $v^{(0)}$ no tiene componente en los autoespacios de esos autovalores, puede converger.
+- Si $v^{(0)}$ tiene componente en esos autoespacios, $v^{(k)}$ oscila y no converge.
+
+**Ojo:** unicidad del equilibrio y convergencia son condiciones independientes. Puede haber equilibrio único ($dim(E_{\lambda=1})=1$) pero no converger desde todo $v^{(0)}$ si hay ciclos que generan autovalores de módulo 1 (e.g. un ciclo de período 3 genera $\lambda = e^{2\pi i/3}$).
+
+**Cómo aparecen autovalores complejos de módulo 1 (ciclos):** Si la cadena contiene un subciclo determinístico de longitud $k$ (estados $i_1 \to i_2 \to \cdots \to i_k \to i_1$ con probabilidad 1), la submatriz $Q$ de $P$ restringida a esos estados es una matriz de permutación cíclica que satisface $Q^k = I$. Sus autovalores son las $k$-ésimas raíces de la unidad: $\lambda_j = e^{2\pi i j/k}$, $j=0,\ldots,k-1$, todos de módulo 1. Como los estados del ciclo son invariantes bajo $P$, estos autovalores de $Q$ son también autovalores de $P$. **Importante:** esto no implica $P^k = I$ — los estados fuera del ciclo pueden ser transitorios y rompen esa igualdad para la matriz completa.
 
 ##### 5.5 Cadenas reducibles o irreducibles
-- Se dice que una **cadena de Markov es irreducible** si $dim(Ker(A-I))=dim(E_A(\lambda=1)) = 1$.
-- Si la **cadena de Markov es reducible** ($dim(E_A(\lambda=1))$) entonces la convergencia depende de $v^{(0)}$. 
-
-    Si $v^{(0)}$ es ortogonal a los autovectores asociados a los autovalores de módulo 1, entonces $v^{(k)}$ sí puede converger. 
-    Si $v^{(0)}$ tiene componente en dirección de esos autovectores, entonces $v^{(k)}$ no converge (por ejemplo, oscila).
+- Una **cadena de Markov es irreducible** si todo estado es alcanzable desde cualquier otro estado (el grafo es fuertemente conexo).
+- Una cadena irreducible tiene $dim(E_A(\lambda=1)) = 1$ (equilibrio único), pero no necesariamente converge desde todo $v^{(0)}$ — para eso también se necesita aperiodicidad (no tener ciclos).
+- Una cadena irreducible **y aperiódica** garantiza convergencia desde cualquier $v^{(0)}$.
 
 ## 6. Cuadrados mínimos
 

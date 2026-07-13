@@ -32,3 +32,5 @@ Formas bilineales, representación matricial. Productos internos. Vectores ortog
 - Notas de Álgebra Lineal Computacional . Gabriel Acosta y Santiago Laplagne. (última actualización 25/08/22)
 - Álgebra lineal (apunte de la materia). Gabriela Jeronimo, Juan Sabia y Susana Tesauri.
 - Elementos de Cálculo Numérico (apunte de la materia). Ricardo Durán, Silvia Lasalle y Julio Rossi.
+
+> Los PDFs de la bibliografía no se versionan en este repo (derechos de autor). La carpeta `bibliografia/` está en `.gitignore`; conseguí los libros por tu cuenta y colocalos ahí si los querés tener localmente.

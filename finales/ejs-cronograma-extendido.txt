@@ -1,0 +1,43 @@
+LISTADO DE EJERCICIOS — PLAN FINAL ALC (11 al 28/07)
+======================================================
+
+GUIAS DE PRACTICA
+------------------
+Practica 1   Ej 7, 11, 15         suma directa, base, cambio de base         [11/07]
+Practica 2   Ej 5, 19, 20         Nu/Im, isomorfismo, cond-infinito          [11/07]
+Practica 3   Ej 2, 4, 6           LU manual + implementacion                 [12/07]
+Practica 3   Ej 9, 11             Cholesky                                   [12/07]
+Practica 3   Ej 14, 15-18         Gram-Schmidt + proyectores                 [12/07]
+Practica 3   Ej 20                QR a mano                                  [14/07]
+Practica 3   Ej 24                QR + proyectores                          [14/07]
+Practica 3   Ej 21                Householder: H_u, caso u=e_i, x=w+v       [15/07]
+Practica 3   Ej 22(b)             implementar QR por Householder             [16/07]
+Practica 4   Ej 1, 2              autovalores/diagonalizacion base           [18/07]
+Practica 4   Ej 8, 9              simetricas, proyectores                    [18/07]
+Practica 4   Ej 14, 15, 16        Markov (completos)                         [18/07]
+Practica 5   Ej 1                 Schur + nilpotencia + A^10 (a fondo)       [19/07]
+Practica 5   Ej 1                 repetir de cero, cronometrado              [20/07]
+Practica 5   Ej 7                 SVD completo (norma/cond/inversa)          [19/07]
+Practica 5   Ej 14-16             Eckart-Young + pseudoinversa               [19/07]
+Practica 6   Ej 2                 x_hat = A+ b, puente con pseudoinversa     [21/07]
+Practica 6   Ej 13                regresion multiple aplicada                [21/07]
+Practica 7   Ej 3                 rho vs norma (conceptual)                  [22/07]
+Practica 7   Ej 4, 5              convergencia + comparacion                 [22/07]
+Practica 7   Ej 9                 splitting generico M,N                     [23/07]
+Practica 7   Ej 11                SOR                                        [23/07]
+Practica 7   Ej 12, 13            forma cuadratica + paso optimo             [24/07]
+Practica 7   Ej 16                gradiente, implementacion + zigzag         [24/07]
+
+EJERCICIOS PUNTUALES DE FINALES
+--------------------------------
+Final 06/03/2026    Ej 2         bateria "debe/podria/no puede"              [13/07]
+Final 12/12/2025     Ej 1         unico final con Householder completo       [17/07]
+Final 07/08/2025     Ej 2         Markov de examen                           [18/07]
+Final 18/02/2026     Ej 3         Markov de examen                           [18/07]
+Final 17/12/2025     Ej 3         Schur aplicado a splitting iterativo       [19/07]
+
+SIMULACROS COMPLETOS
+------------------------------------------
+Final 07/08/2025               completo, sin apuntes                        [25/07]
+Final 18/02/2026               completo, sin apuntes (Markov+SOR+SVD)       [26/07]
+Final 21/07/2025 o 06/03/2026  reserva, si sobra tiempo                     [26/07]

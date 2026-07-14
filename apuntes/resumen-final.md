@@ -2,7 +2,7 @@
 
 Unifica `resumen-1er-parcial.md` y `resumen-2do-parcial.md`, reorganizado según los 5 bloques temáticos del final (28/07). Pensado para repasar rápido cuando te perdés en un concepto o algoritmo — no para leer de punta a punta.
 
-⚠️ = temas que marcaste como más difíciles (Householder, Schur). Tienen la sección más desarrollada a propósito.
+⚠️ Tienen la sección más desarrollada a propósito.
 
 ## Índice
 0. [Tabla rápida: existencia y costo de descomposiciones](#0-tabla-rápida-existencia-y-costo-de-descomposiciones)

@@ -4,7 +4,7 @@ LISTADO DE EJERCICIOS — PLAN FINAL ALC (11 al 28/07)
 GUIAS DE PRACTICA
 ------------------
 Practica 1   Ej 7, 11, 15         suma directa, base, cambio de base         [11/07]
-Practica 2   Ej 5, 19, 20         Nu/Im, isomorfismo, cond-infinito          [11/07]
+Practica 2   Ej 5, 11, 16, 17, 19, 20         Nu/Im, isomorfismo, cond-infinito          [11/07]
 Practica 3   Ej 2, 4, 6           LU manual + implementacion                 [12/07]
 Practica 3   Ej 9, 11             Cholesky                                   [12/07]
 Practica 3   Ej 14, 15-18         Gram-Schmidt + proyectores                 [12/07]

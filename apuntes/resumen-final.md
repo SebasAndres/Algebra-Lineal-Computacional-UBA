@@ -32,7 +32,18 @@ Unifica `resumen-1er-parcial.md` y `resumen-2do-parcial.md`, reorganizado según
 ## 1. Subespacios, Bases, TL, Normas, Número de Condición
 
 ### 1.1 Dimensión y subespacios
+- **Producto matriz-vector = combinación lineal de columnas:** si $B=[b_1|b_2|\dots|b_n]$ (columnas $b_i$), entonces
+  $$B\begin{pmatrix}a_1\\a_2\\\vdots\\a_n\end{pmatrix} = a_1b_1+a_2b_2+\dots+a_nb_n$$
+  Demostración: $(a_1,\dots,a_n)^T=\sum a_ie_i$, y $Be_i=b_i$ (columna $i$), entonces por linealidad $B\sum a_ie_i=\sum a_i(Be_i)=\sum a_ib_i$. Es **la** forma correcta de pensar $Bx$ (en vez de "fila por columna"). Consecuencia directa: $Bx=0$ tiene solución no trivial $\iff$ las columnas de $B$ son LD (ver 1.2).
+- **Notación:** $f:\mathbb V\to\mathbb W$ es una TL entre $\mathbb K$-espacios vectoriales; $\mathbb V$ = **dominio** (donde vive el vector de entrada), $\mathbb W$ = **codominio** (espacio de llegada declarado). $\operatorname{Im}(f)\subseteq\mathbb W$ es lo que $f$ efectivamente alcanza (ver "Ojo" más abajo).
 - **Teorema de la dimensión (rango-nulidad):** $\dim(\operatorname{Im}(f)) + \dim(\ker(f)) = \dim(\mathbb V)$.
+  - Vale **siempre**, para toda TL (solo requiere $\dim(\mathbb V)$ finita) — no presupone mono/epi/iso. Al revés: mono/epi/iso son casos particulares que se derivan de él. Ej: $f:\mathbb R^3\to\mathbb R^3$, $f(x,y,z)=(x,y,0)$ — ni mono ni epi, pero $\dim(\ker f)=1$, $\dim(\operatorname{Im} f)=2$, y $1+2=3$ igual se cumple.
+- **Mono/epi/isomorfismo:**
+  - $f$ inyectiva (**monomorfismo**) $\iff \ker(f)=\{0\}$.
+  - $f$ sobreyectiva (**epimorfismo**) $\iff \operatorname{Im}(f)=\mathbb W$.
+  - $f$ biyectiva (**isomorfismo**) $\iff$ mono y epi a la vez $\Rightarrow \dim(\mathbb V)=\dim(\mathbb W)$ (espacios isomorfos).
+  - Si $\dim(\mathbb V)=\dim(\mathbb W)$ (dim. finita): alcanza con probar una sola (mono $\iff$ epi $\iff$ iso).
+  - **Ojo (codominio ≠ imagen):** el codominio $\mathbb W$ es el espacio de llegada **declarado** (parte de la definición de $f:\mathbb V\to\mathbb W$); la imagen es el espacio de llegada **real** (lo que $f$ efectivamente alcanza). Siempre $\operatorname{Im}(f)\subseteq\mathbb W$; epimorfismo es cuando esa inclusión es **igualdad**, no una propiedad trivial de $\operatorname{Im}(f)$ en sí misma (todo elemento de $\operatorname{Im}(f)$ tiene preimagen por definición, eso no dice nada). Ej: $f:\mathbb R^2\to\mathbb R^3$, $f(x,y)=(x,y,0)$ — codominio $\mathbb R^3$, imagen el plano $\{(x,y,0)\}\subsetneq\mathbb R^3$: no es epimorfismo.
 - $\dim(A+B) = \dim(A)+\dim(B)-\dim(A\cap B)$.
 - $rk(A) = \dim(\operatorname{Im}(A))$, $\ker(A) = \{x : Ax=0\}$.
 - **Suma:** $S+T=\langle$ generadores de $S$ y $T$ juntos $\rangle$.
@@ -51,7 +62,10 @@ $A$ **inversible** $\iff \det(A)\neq0 \iff$ columnas/filas LI $\iff$ columnas fo
 - Extender una base para completar el subespacio. Se puede probar agregando los vectores como fila y al final un canónico (ir probando), triangular el sistema y ver si la fila se hace cero, si no se hace cero entonces los generadores anteriores + el e_i forman una base.
   - **Ojo:** no alcanza con "mirar" la fila del $e_i$ agregado — hay que completar la triangulación (reducirla contra **todos** los pivotes ya existentes que caigan en su misma columna). Si $e_i$ es redundante, esa reducción la va a llevar a fila nula sin importar que esté al final; si hace falta, puede requerir reordenar filas (pivoteo) para que el pivote quede visible. No es que el último $e_i$ "sobreviva" siempre por estar en el fondo del sistema.
 - $C_{BE} @ [(x,y,z)]_B = [(x,y,z)]_E \iff [(x,y,z)]_B = C_{EB} @ [(x,y,z)]_E $
-- $f(\alpha u+v)=\alpha f(u)+f(v)$. Consecuencias: $f(0)=0$, $f(-v)=-f(v)$.
+- **Requisitos para que $f$ sea TL** (equivalentes, cualquiera de las dos formas alcanza):
+  - Forma separada: $f(u+v)=f(u)+f(v)$ (aditividad) **y** $f(\alpha u)=\alpha f(u)$ (homogeneidad), $\forall u,v\in\mathbb V, \forall\alpha\in\mathbb K$.
+  - Forma combinada (la más rápida de chequear en un ejercicio): $f(\alpha u+v)=\alpha f(u)+f(v)$.
+  - Consecuencias (no son lo que hay que probar, salen gratis si $f$ es TL): $f(0)=0$, $f(-v)=-f(v)$.
 - $[f]_{BB'}$: columnas = coordenadas de $f(v_i)$ en base $B'$. $[f(v)]_{B'} = [f]_{BB'}[v]_B$.
 - $C_{BB'}$: columnas = vectores de $B$ escritos en $B'$. $C_{B'B}=(C_{BB'})^{-1}$. $C_{BB''}=C_{B'B''}C_{BB'}$.
 - Práctico: $C_{BE}$ = poner vectores de $B$ como columnas. $C_{EB}=(C_{BE})^{-1}$; si $B$ ortonormal, $C_{EB}=C_{BE}^T$.

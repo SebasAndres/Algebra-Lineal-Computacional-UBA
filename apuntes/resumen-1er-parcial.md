@@ -159,6 +159,11 @@ Son los dos subespacios fundamentales asociados a una T.L.:
 
     * **Propiedad:** $f$ es sobreyectiva (epimorfismo) $\iff \operatorname{Im}(f) = \mathbb{W}$.
 
+* **Isomorfismo:** $f$ es biyectiva (monomorfismo y epimorfismo a la vez) $\iff \ker(f) = \{0\} \text{ y } \operatorname{Im}(f) = \mathbb{W}$.
+
+    * Si existe un isomorfismo entre $\mathbb{V}$ y $\mathbb{W}$, se dice que son **espacios isomorfos**, y en tal caso $\dim(\mathbb{V}) = \dim(\mathbb{W})$.
+    * Si $\dim(\mathbb{V}) = \dim(\mathbb{W})$ (dimensión finita), entonces $f$ es isomorfismo $\iff$ es monomorfismo $\iff$ es epimorfismo (alcanza con probar una sola inyectividad/sobreyectividad).
+
 #### Teorema de la Dimensión (Teorema del Rango-Nulidad)
 
 Si $\mathbb{V}$ es de dimensión finita:

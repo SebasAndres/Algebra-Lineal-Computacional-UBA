@@ -73,9 +73,11 @@ $A$ **inversible** $\iff \det(A)\neq0 \iff$ columnas/filas LI $\iff$ columnas fo
 - **Clave:** dos matrices representan la misma TL en distintas bases $\iff$ son **semejantes** $\iff \exists C: A=CBC^{-1}$ $\implies$ comparten det, traza, autovalores.
 
 ### 1.4 Normas vectoriales y matriciales
-- Norma: $\|av\|=|a|\|v\|$; $\|v\|=0\Rightarrow v=0$; desigualdad triangular.
+- **Axiomas de norma vectorial** ($\|\cdot\|:\mathbb V\to\mathbb R$): (1) $\|v\|\geq0$ y $\|v\|=0\iff v=0$ (definida positiva); (2) $\|\alpha v\|=|\alpha|\|v\|$ (homogeneidad); (3) $\|u+v\|\leq\|u\|+\|v\|$ (desigualdad triangular).
+- **Axiomas de norma matricial:** los mismos tres de arriba pensando a $A\in\mathbb R^{n\times n}$ como vector (positividad, homogeneidad, triangular), **más** la submultiplicatividad $\|AB\|\leq\|A\|\|B\|$ (no sale gratis de los primeros tres — es lo que distingue una "norma matricial" de cualquier norma vectorial aplicada a la matriz vista como vector plano; ej. la norma del máximo de las entradas cumple los tres primeros pero no la submultiplicatividad, así que no es norma matricial). Toda norma **inducida** ($\|A\|=\max_{\|x\|=1}\|Ax\|$) es automáticamente submultiplicativa.
 - $\|v\|_1=\sum|v_i|$, $\|v\|_\infty=\max|v_i|$, $\|v\|_p=(\sum|v_i|^p)^{1/p}$.
-- Cauchy-Schwarz: $|x^*y|\leq\|x\|\|y\|$.
+- Cauchy-Schwarz: $|x^*y|\leq\|x\|\|y\|$. Caso $\|\cdot\|_2$ sin valor absoluto: $\langle u,v\rangle\leq\|u\|_2\|v\|_2$ (sale de $\langle u,v\rangle\leq|\langle u,v\rangle|\leq\|u\|_2\|v\|_2$).
+- Desigualdad triangular para sumas de escalares: $\left|\sum_i a_i\right|\leq\sum_i|a_i|$ (**no** es igualdad en general — se cancelan términos de distinto signo). Clave para acotar $|(Ax)_i|=\left|\sum_j a_{ij}x_j\right|\leq\sum_j|a_{ij}||x_j|$ al probar $\|A\|_\infty=\max_i\sum_j|a_{ij}|$: la cota superior sale de esta desigualdad, y la cota inferior (igualdad) requiere elegir $x_j=\operatorname{sign}(a_{pj})$ para que cada término $a_{pj}x_j$ sea positivo y la desigualdad se vuelva igualdad.
 - Norma matricial inducida: $\|A\| = \max_{\|x\|=1}\|Ax\|$.
 - $\|A\|_\infty$ = máx suma de **filas** (en módulo). $\|A\|_1$ = máx suma de **columnas**.
 - $\|A\|_2 = \sigma_1(A)$ (mayor valor singular) — ver Tema 4.

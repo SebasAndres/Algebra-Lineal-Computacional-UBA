@@ -19,13 +19,25 @@ Unifica `resumen-1er-parcial.md` y `resumen-2do-parcial.md`, reorganizado según
 
 | Descomposición | Forma | Requisito | ¿Existe siempre? | Costo | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **LU** | $A=LU$ | Cuadrada, menores principales $\det(A_k)\neq0$ para $k=1..n-1$ | NO ❌ (sí con permutación $PA=LU$) | $O(n^3/3)$ | Único si $A$ inversible |
-| **Cholesky** | $A=\hat L\hat L^T$ | Cuadrada, simétrica y **definida positiva** | NO ❌ | $O(n^3/3)$ | La más restrictiva; única si existe |
-| **QR** | $A=QR$ | $m\geq n$, cualquier $A$ | SÍ ✅ | Householder: $O(n^3)$ real (naive armando $H_k$: $O(n^4)$) · GS: $O(n^3)$ | Única si columnas LI o $R_{ii}>0$ |
-| **Schur** | $A=UTU^*$ | Cuadrada | SÍ ✅ | — | $T$ triangular superior, $U$ unitaria |
-| **SVD** | $A=U\Sigma V^*$ | Ninguno — **cualquier matriz** $m\times n$ | SÍ ✅ | — | La más general de todas |
+| **LU** | $A=LU$ | Cuadrada, menores principales $\det(A_k)\neq0$ para $k=1..n-1$ | NO ❌ (sí con permutación $PA=LU$) | $O(n^3/3)$ (${\sim}2n^3/3$ flops) | Único si $A$ inversible |
+| **Cholesky** | $A=\hat L\hat L^T$ | Cuadrada, simétrica y **definida positiva** | NO ❌ | $O(n^3/3)$ (mitad de flops que LU: explota la simetría) | La más restrictiva; única si existe |
+| **QR** | $A=QR$ | $m\geq n$, cualquier $A$ | SÍ ✅ | Householder: $O(n^3)$ real, ${\sim}2n^3/3$ si $m=n$ (naive armando $H_k$: $O(n^4)$) · GS: $O(n^3)$, mismo orden pero constante mayor y menos estable | Única si columnas LI o $R_{ii}>0$ |
+| **Schur** | $A=UTU^*$ | Cuadrada | SÍ ✅ | $O(n^3)$ (algoritmo QR iterativo; en la práctica ${\sim}10n^3$ para forma real, más iteraciones sobre el mismo orden) | $T$ triangular superior, $U$ unitaria |
+| **SVD** | $A=U\Sigma V^*$ | Ninguno — **cualquier matriz** $m\times n$ | SÍ ✅ | $O(mn\cdot\min(m,n))$ en general; $O(n^3)$ si $A$ cuadrada (bidiagonalización + QR implícito) | La más general y la más cara de las cinco |
+| **Inversa** ($A^{-1}$) | — | Cuadrada, $\det(A)\neq0$ | NO ❌ | $O(n^3)$ (mismo orden que LU, pero con más constante: LU + $n$ resoluciones triangulares) | Ver nota abajo — casi nunca hace falta calcularla explícitamente |
 
 **Regla de costo general:** multiplicar $(p\times q)\cdot(q\times r)$ cuesta $O(p\cdot q\cdot r)$.
+
+**Costos de operaciones básicas (para tener en cuenta al implementar):**
+- Producto matriz-vector: $O(n^2)$. Producto matriz-matriz: $O(n^3)$.
+- Resolver un sistema **triangular** ($Lx=b$ o $Ux=b$, sustitución progresiva/regresiva): $O(n^2)$ — mucho más barato que factorizar.
+- Resolver $Ax=b$ (genérico) vía LU/QR: $O(n^3)$ para factorizar (una sola vez) $+\ O(n^2)$ por cada lado derecho $b$ adicional (reusando la factorización).
+
+**⚠️ Sobre invertir una matriz — clave para implementaciones:**
+- Calcular $A^{-1}$ explícitamente cuesta $O(n^3)$, **el mismo orden** que resolver un sistema, pero con una constante bastante mayor (equivale a resolver $n$ sistemas $Ax_i=e_i$, uno por columna de la identidad).
+- **Nunca calcules $A^{-1}$ para resolver $Ax=b$** — hacer $x=A^{-1}b$ es más lento (factorizás $A$ y encima multiplicás por $b$) y **menos estable numéricamente** que resolver directamente vía LU/QR + sustitución. Regla práctica: "resolver, no invertir".
+- Si necesitás resolver $Ax=b$ para **muchos $b$ distintos** con la misma $A$: factorizá una sola vez ($O(n^3)$) y resolvé cada sistema triangular por separado ($O(n^2)$ c/u) — sigue siendo mejor que armar $A^{-1}$ explícita si son pocos $b$; si son $\geq n$ lados derechos, el costo total se empareja con el de invertir, pero invertir explícita sigue siendo menos estable.
+- Calcular $(A^TA)^{-1}$ (ecuaciones normales, cuadrados mínimos) es doblemente costoso: $O(mn^2)$ para armar $A^TA$ más $O(n^3)$ para invertir, y además eleva el número de condición al cuadrado ($\operatorname{cond}(A^TA)=\operatorname{cond}_2(A)^2$) — por eso ahí también se prefiere QR o SVD en vez de invertir (ver 5.1).
 
 ---
 
@@ -38,6 +50,8 @@ Unifica `resumen-1er-parcial.md` y `resumen-2do-parcial.md`, reorganizado según
 - **Notación:** $f:\mathbb V\to\mathbb W$ es una TL entre $\mathbb K$-espacios vectoriales; $\mathbb V$ = **dominio** (donde vive el vector de entrada), $\mathbb W$ = **codominio** (espacio de llegada declarado). $\operatorname{Im}(f)\subseteq\mathbb W$ es lo que $f$ efectivamente alcanza (ver "Ojo" más abajo).
 - **Teorema de la dimensión (rango-nulidad):** $\dim(\operatorname{Im}(f)) + \dim(\ker(f)) = \dim(\mathbb V)$.
   - Vale **siempre**, para toda TL (solo requiere $\dim(\mathbb V)$ finita) — no presupone mono/epi/iso. Al revés: mono/epi/iso son casos particulares que se derivan de él. Ej: $f:\mathbb R^3\to\mathbb R^3$, $f(x,y,z)=(x,y,0)$ — ni mono ni epi, pero $\dim(\ker f)=1$, $\dim(\operatorname{Im} f)=2$, y $1+2=3$ igual se cumple.
+  - **Ojo con matrices no cuadradas:** el teorema reparte la dimensión del **dominio** $\mathbb V$, no la del codominio. Si $A\in\mathbb R^{m\times n}$ (con $m\neq n$), $A$ es una TL $\mathbb R^n\to\mathbb R^m$: el dominio es $\mathbb R^n$, así que $\dim(\operatorname{Im}(A))+\dim(\ker(A))=n$ (la cantidad de columnas/dimensión del espacio de donde parte $x$), **no** $m$. Intuición: cada dirección del dominio o "muere" (cae en el núcleo) o "sobrevive" generando una dirección de la imagen; sumando ambas recuperás las direcciones originales del dominio, no las del codominio.
+  - **Consecuencia útil (cuadrados mínimos):** si $A\in\mathbb R^{m\times n}$, $m\geq n$, y $rg(A)=n$ (rango completo de columnas), entonces $\dim(\ker A)=n-n=0 \Rightarrow \ker(A)=\{0\} \Rightarrow Ax=0$ solo para $x=0$ $\Rightarrow$ las $n$ columnas de $A$ son LI (ninguna combinación no trivial de ellas da 0) $\Rightarrow A^TA$ inversible.
 - **Mono/epi/isomorfismo:**
   - $f$ inyectiva (**monomorfismo**) $\iff \ker(f)=\{0\}$.
   - $f$ sobreyectiva (**epimorfismo**) $\iff \operatorname{Im}(f)=\mathbb W$.
@@ -292,11 +306,25 @@ Caso columnas LI (rango completo): $A^+=(A^TA)^{-1}A^T$.
 ## 5. Mínimos Cuadrados, Métodos Iterativos
 
 ### 5.1 Cuadrados mínimos
-Buscamos minimizar $\|Ax-b\|_2^2$ cuando $Ax=b$ no tiene solución exacta.
-- **Ecuaciones normales:** $A^TAx=A^Tb \Rightarrow x=(A^TA)^{-1}A^Tb$.
-- Mal condicionadas: $\operatorname{cond}(A^TA)=\operatorname{cond}_2(A)^2$ — por eso en la práctica se resuelve vía **QR** o **SVD**, no armando $A^TA$ directamente.
-- $Ax=b$ tiene solución $\iff AA^+b=b \iff b\in\operatorname{col}(A)$.
-- $A$ con columnas LI $\iff$ solución única de cuadrados mínimos.
+
+**Planteo:** dado $A\in\mathbb R^{m\times n}$, $b\in\mathbb R^m$, cuando $Ax=b$ no tiene solución exacta ($b\notin\operatorname{Col}(A)$) buscamos $\hat x$ que minimice el error cuadrático $\|Ax-b\|_2^2$ (MSE).
+
+**① Existencia — siempre.** El problema tiene solución **para cualquier $A$ y $b$**, sin ninguna condición sobre $A$. Razón: $A\hat x$ debe ser el punto de $\operatorname{Col}(A)$ más cercano a $b$, es decir la **proyección ortogonal** de $b$ sobre $\operatorname{Col}(A)$ — y esa proyección siempre existe y es única *como vector*, para cualquier subespacio. Lo que puede no ser único es el $\hat x$ que la produce (ver ③).
+
+**② Validez — de dónde salen las ecuaciones normales.** $\hat x$ es un minimizador $\iff$ cumple $A^TA\hat x=A^Tb$. Derivación paso a paso:
+1. $A\hat x$ = proyección ortogonal de $b$ sobre $\operatorname{Col}(A)$ $\iff$ el residuo es ⊥ a **todo** el subespacio: $b-A\hat x \perp \operatorname{Col}(A)$ (propiedad que define a una proyección ortogonal).
+2. $\operatorname{Col}(A)=\operatorname{gen}\{a_1,\dots,a_n\}$ (columnas de $A$). Ser ⊥ a todo el subespacio equivale, por linealidad del producto interno, a ser ⊥ a cada uno de sus generadores: $a_i^T(b-A\hat x)=0$ para $i=1,\dots,n$.
+3. Apilar esas $n$ ecuaciones escalares como filas es exactamente multiplicar por $A^T$ (cuyas filas son $a_i^T$): $A^T(b-A\hat x)=0$.
+4. Distribuyendo: $A^Tb - A^TA\hat x = 0 \;\Rightarrow\; A^TA\hat x = A^Tb$ — las ecuaciones normales.
+
+**Ojo:** $\operatorname{Col}(A)=\{Ax:x\in\mathbb R^n\}$ (combinación de columnas de $A$) — no confundir con $\{A^Ty:y\}$, que es el espacio fila de $A$ (coinciden solo si $A$ es simétrica). Tampoco es "$b-Ax\perp A^T$" (una matriz no es un subespacio): es $b-Ax\perp\operatorname{Col}(A)$, y $A^T(b-Ax)=0$ es la forma matricial de esa condición.
+
+**③ Unicidad — depende del rango.** Cualquier $\hat x$ que cumpla las ecuaciones normales da el mismo $A\hat x$ (la proyección es única), pero $\hat x$ en sí es único $\iff$ las columnas de $A$ son LI $\iff$ (para $A\in\mathbb R^{m\times n}$, $m\geq n$) $rg(A)=n$ (rango completo de columnas — el rango es la dimensión de $\operatorname{Col}(A)$, que nunca supera la cantidad de columnas; si la alcanza exactamente, ninguna columna depende de las demás, ver 1.1) $\iff A^TA$ inversible. En ese caso: $\hat x=(A^TA)^{-1}A^Tb$.
+- Si $rg(A)<n$: hay **infinitos** $\hat x$ que minimizan (todas dan la misma $A\hat x$). El de **norma mínima** entre todos ellos es $\hat x=A^+b$ (pseudoinversa, ver 4.3) — por eso $A^+$ generaliza a $(A^TA)^{-1}A^T$ también en el caso sin rango completo.
+
+**En la práctica:**
+- Mal condicionadas: $\operatorname{cond}(A^TA)=\operatorname{cond}_2(A)^2$ — por eso se resuelve vía **QR** o **SVD**, no armando $A^TA$ directamente.
+- $Ax=b$ tiene solución exacta $\iff AA^+b=b \iff b\in\operatorname{Col}(A)$ (caso particular donde el error mínimo da 0).
 - Si $Q$ tiene columnas ortonormales (de una QR de $A$): resolver $Rx=Q^Tb$ es más estable que las ecuaciones normales.
 
 ### 5.2 Métodos iterativos — marco general

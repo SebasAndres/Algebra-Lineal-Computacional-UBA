@@ -219,6 +219,7 @@ Desarrollo de la fórmula:
 - Aparece minimizando una función de error $L(y, \hat{y}) = (y-\hat{y})^2$ o también $E = \sum_{i=1}^n (y_i-\hat{y_i})^2$.
 - Luego, buscamos...
 $$\argmin_{a,b}{E(a,b)}=\argmin_{a,b}{\sum_{i=1}^n (y_i-\hat{y_i})^2}=\argmin_{a,b}{\sum_{i=1}^n (y_i-(a*x_i+b))^2}$$
+
 - O también, matricialmente..
 $$\argmin_{a,b}{
     \begin{Vmatrix}
